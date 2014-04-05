@@ -21,8 +21,8 @@ namespace UnitTests.DomainTest
             var result = target.Lines.ToArray();
 
             Assert.AreEqual(result.Length, 2);
-            Assert.AreEqual(result[0], p1);
-            Assert.AreEqual(result[1], p2);
+            Assert.AreEqual(result[0].Product, p1);
+            Assert.AreEqual(result[1].Product, p2);
 
         }
 
@@ -38,8 +38,8 @@ namespace UnitTests.DomainTest
             var result = target.Lines.OrderBy(c => c.Product.ProductID).ToArray();
 
             Assert.AreEqual(result.Length, 2);
-            Assert.AreEqual(result[0], 11);
-            Assert.AreEqual(result[1], 1);
+            Assert.AreEqual(result[0].Quantity, 11);
+            Assert.AreEqual(result[1].Quantity, 1);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace UnitTests.DomainTest
             target.RemoveLine(p2);
 
             Assert.AreEqual(target.Lines.Count(c => c.Product == p2), 0);
-            Assert.AreEqual(target.Lines.Count(), 6);
+            Assert.AreEqual(target.Lines.Count(), 2);
         }
 
         [TestMethod]

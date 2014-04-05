@@ -10,7 +10,7 @@ namespace UnitTests.WebUITest
     public class CreateLinksToPages
     {
         [TestMethod]
-        public void Can_Generate_Page_Links()//тестирование метода PageLinks
+        public void Can_Generate_Page_Links()//тестирование создания ссылок на страницы
         {
             HtmlHelper myHelper = null;
             var pagingInfo = new PagingInfo
@@ -21,8 +21,7 @@ namespace UnitTests.WebUITest
             };
             Func<int, string> pageUrlDelegate = i => "Page" + i;
             var result = myHelper.PageLinks(pagingInfo, pageUrlDelegate);
-            Assert.AreEqual(result.ToString(), @"<a href=""Page1"">1</a>)
-<a class=""selected"" href=""Page2"">2</a><a href=""Page3"">3</a>");
+            Assert.AreEqual(result.ToString(), @"<a href=""Page1"">1</a><a class=""selected"" href=""Page2"">2</a><a href=""Page3"">3</a>");
 
 
         }

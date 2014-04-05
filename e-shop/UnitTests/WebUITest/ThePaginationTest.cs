@@ -17,11 +17,11 @@ namespace UnitTests.WebUITest
            var mosk= new Mock<IProductRepository>();
             mosk.Setup(m => m.Products).Returns(new[]
             {
-                new Product {ProductID = 1, Name = "p1"},
-                new Product {ProductID = 2, Name = "p2"},
-                new Product {ProductID = 3, Name = "p3"},
-                new Product {ProductID = 4, Name = "p4"},
-                new Product {ProductID = 5, Name = "p5"}
+                new Product {ProductID = 1, Name = "P1"},
+                new Product {ProductID = 2, Name = "P2"},
+                new Product {ProductID = 3, Name = "P3"},
+                new Product {ProductID = 4, Name = "P4"},
+                new Product {ProductID = 5, Name = "P5"}
             }.AsQueryable);
 
             var controller=new ProductController(mosk.Object) {PageSize = 3};
