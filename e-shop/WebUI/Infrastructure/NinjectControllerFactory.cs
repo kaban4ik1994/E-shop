@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Domain.Abstract;
 using Domain.Concrete;
+using Domain.Entities;
+using Moq;
 using Ninject;
 
 
@@ -23,13 +25,18 @@ namespace WebUI.Infrastructure
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
+
             return controllerType == null ? null : (IController)_ninjectKernel.Get(controllerType);
 
         }
 
         private void AddBindings()
         {    
-            _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
+            var mock=new Mock<IProductRepository>();
+            mock.Setup(m => m.Products)
+                .Returns(new List<Product> { new Product { Name = "fds", Price = 25, Category = "cat1" }, new Product { Name = "fds", Price = 25, Category = "cat2" }, new Product { Name = "fds", Price = 25, Category = "cat3" }, new Product { Name = "fds", Price = 25, Category = "cat1"}, new Product { Name = "fds", Price = 25, Category = "cat5" } }.AsQueryable);
+            _ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
+            //  _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
         }
     }
 }

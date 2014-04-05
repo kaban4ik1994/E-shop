@@ -14,10 +14,10 @@ namespace UnitTests
     public class UnitTest1
     {
         [TestMethod]
-        public void Can_Paginate()
+        public void Can_Paginate()// тест разбиения на страницы
         {
            var mosk= new Mock<IProductRepository>();
-            mosk.Setup(m => m.Products).Returns(new Product[]
+            mosk.Setup(m => m.Products).Returns(new[]
             {
                 new Product {ProductID = 1, Name = "p1"},
                 new Product {ProductID = 2, Name = "p2"},

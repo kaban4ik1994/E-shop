@@ -10,15 +10,15 @@ using WebUI.Models;
 
 namespace UnitTests
 {
-    // необходимо удостовериться, что контроллер отправляет представлению правильные данные разбиения страниц
+
     [TestClass]
     public class UnitTest3
     {
         [TestMethod]
-        public void Can_Send_Pagination_View_Model()
+        public void Can_Send_Pagination_View_Model()   // необходимо удостовериться, что контроллер отправляет представлению правильные данные разбиения страниц
         {
             //создание имитированного хранилища
-            var mock=new Mock<IProductRepository>();
+            var mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new[]
             {
                 new Product {ProductID = 1, Name = "p1"},
@@ -29,15 +29,15 @@ namespace UnitTests
             }.AsQueryable);
 
             //создание контроллера и установка размера
-            var controller=new ProductController(mock.Object){PageSize = 3};
+            var controller = new ProductController(mock.Object) { PageSize = 3 };
             //действие
-            var result = (ProductsListViewModel) controller.List(2).Model;
+            var result = (ProductsListViewModel)controller.List(null, 2).Model;
             // утверждение
             var pageInfo = result.PagingInfo;
-            Assert.AreEqual(pageInfo.CurrentPage,2);
-            Assert.AreEqual(pageInfo.ItemsPerPage,3);
-            Assert.AreEqual(pageInfo.TotalItems,5);
-            Assert.AreEqual(pageInfo.TotalPages,2);
+            Assert.AreEqual(pageInfo.CurrentPage, 2);
+            Assert.AreEqual(pageInfo.ItemsPerPage, 3);
+            Assert.AreEqual(pageInfo.TotalItems, 5);
+            Assert.AreEqual(pageInfo.TotalPages, 2);
 
         }
     }

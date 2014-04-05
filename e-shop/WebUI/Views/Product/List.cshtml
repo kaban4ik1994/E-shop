@@ -1,14 +1,15 @@
 ﻿@model WebUI.Models.ProductsListViewModel
 
 @{
-    ViewBag.Title = "Product";
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @foreach (var p in Model.Products)
 {
-    <div class="item">
-        <h3>@p.Name</h3>
-        @p.Descriprion
-        <h4>@p.Price</h4>
-    </div>
+    Html.RenderPartial("ProductSummary",p);
 }
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x=>Url.Action("List", new {page=x, category=Model.CurrentCategory}))
+
+</div>
