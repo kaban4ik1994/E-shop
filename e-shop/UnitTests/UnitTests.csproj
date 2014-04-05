@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -72,12 +73,16 @@
   </Choose>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="DomainTest\CartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
-    <Compile Include="UnitTest2.cs" />
-    <Compile Include="UnitTest3.cs" />
-    <Compile Include="UnitTest4.cs" />
-    <Compile Include="UnitTest5.cs" />
+    <Compile Include="WebUITest\ThePaginationTest.cs" />
+    <Compile Include="WebUITest\CreateLinksToPages.cs" />
+    <Compile Include="WebUITest\DataPaginationTest.cs" />
+    <Compile Include="WebUITest\FilterByCategory.cs" />
+    <Compile Include="WebUITest\CategoryCreationTest.cs" />
+    <Compile Include="WebUITest\MessageTheSelectedCategoryTest.cs" />
+    <Compile Include="WebUITest\CounterProductsOfACertainCategory.cs" />
+    <Compile Include="WebUITest\ControllerCartTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
@@ -93,6 +98,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

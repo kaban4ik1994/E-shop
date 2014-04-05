@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Domain.Abstract;
 using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,10 +6,10 @@ using Moq;
 using WebUI.Controllers;
 using WebUI.Models;
 
-namespace UnitTests
+namespace UnitTests.WebUITest
 {
     [TestClass]
-    public class UnitTest1
+    public class ThePaginationTest
     {
         [TestMethod]
         public void Can_Paginate()// тест разбиения на страницы
@@ -28,12 +26,14 @@ namespace UnitTests
 
             var controller=new ProductController(mosk.Object) {PageSize = 3};
 
-            var result = (ProductsListViewModel) controller.List(2).Model;
+            var result = (ProductsListViewModel) controller.List(null,2).Model;
 
             var prodArray = result.Products.ToArray();
             Assert.IsTrue(prodArray.Length==2);
             Assert.AreEqual(prodArray[0].Name,"P4");
             Assert.AreEqual(prodArray[1].Name,"P5");
         }
+
+
     }
 }

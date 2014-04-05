@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Domain.Abstract;
 using Domain.Entities;
@@ -7,13 +6,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebUI.Controllers;
 
-namespace UnitTests
+namespace UnitTests.WebUITest
 {
     [TestClass]
-    public class UnitTest5
+    public class CategoryCreationTest
     {
         [TestMethod]
-        public void Can_Create_Categories()
+        public void Can_Create_Categories()//корректность построения списка категорий
         {
             var mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new[]

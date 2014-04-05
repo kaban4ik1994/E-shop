@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Domain.Abstract;
 using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,10 +6,10 @@ using Moq;
 using WebUI.Controllers;
 using WebUI.Models;
 
-namespace UnitTests
+namespace UnitTests.WebUITest
 {
     [TestClass]
-    public class UnitTest4
+    public class FilterByCategory
     {
         [TestMethod]
         public void Can_Filter_Products()// проверка корректности фильтрации по категории

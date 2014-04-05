@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Web.UI;
+﻿using System.Linq;
 using Domain.Abstract;
 using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,11 +6,11 @@ using Moq;
 using WebUI.Controllers;
 using WebUI.Models;
 
-namespace UnitTests
+namespace UnitTests.WebUITest
 {
 
     [TestClass]
-    public class UnitTest3
+    public class DataPaginationTest
     {
         [TestMethod]
         public void Can_Send_Pagination_View_Model()   // необходимо удостовериться, что контроллер отправляет представлению правильные данные разбиения страниц

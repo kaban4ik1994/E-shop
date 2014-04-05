@@ -4,13 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebUI.HtmlHelpers;
 using WebUI.Models;
 
-namespace UnitTests
+namespace UnitTests.WebUITest
 {
     [TestClass]
-    public class UnitTest2
+    public class CreateLinksToPages
     {
         [TestMethod]
-        public void Can_Generate_Page_Links()
+        public void Can_Generate_Page_Links()//тестирование метода PageLinks
         {
             HtmlHelper myHelper = null;
             var pagingInfo = new PagingInfo
