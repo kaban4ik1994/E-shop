@@ -6,6 +6,7 @@ using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebUI.Controllers;
+using WebUI.Models;
 
 namespace UnitTests
 {
@@ -27,14 +28,12 @@ namespace UnitTests
 
             var controller=new ProductController(mosk.Object) {PageSize = 3};
 
-            var result = (IEnumerable<Product>) controller.List(2).Model;
+            var result = (ProductsListViewModel) controller.List(2).Model;
 
-            var prodArray = result.ToArray();
+            var prodArray = result.Products.ToArray();
             Assert.IsTrue(prodArray.Length==2);
             Assert.AreEqual(prodArray[0].Name,"P4");
             Assert.AreEqual(prodArray[1].Name,"P5");
-
-
         }
     }
 }
