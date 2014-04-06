@@ -23,6 +23,12 @@ namespace Domain.Entities
             }
         }
 
+        public void ChangeQuantity(Product product, int quantity)
+        {
+            var line = _lineCollection.FirstOrDefault(p => p.Product.ProductID == product.ProductID);
+            if (line != null) line.Quantity = quantity;
+        }
+
         public void RemoveLine(Product product)
         {
             _lineCollection.RemoveAll(l => l.Product.ProductID == product.ProductID);
@@ -37,6 +43,8 @@ namespace Domain.Entities
         {
             _lineCollection.Clear();
         }
+
+
 
         public IEnumerable<CartLine> Lines
         {

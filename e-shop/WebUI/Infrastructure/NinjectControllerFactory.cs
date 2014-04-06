@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,7 +44,22 @@ namespace WebUI.Infrastructure
                     new Product {ProductID = 5, Name = "p5", Price = 40, Category = "cat5" }
                 }.AsQueryable);
             _ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
+
             //  _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
+         //   var emailSettings = new EmailSettings
+        //    {
+      //          WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")
+      //      };
+
+            var cardSettings = new CardSettings();
+
+        //    _ninjectKernel.Bind<IOrderProcessor>()
+       //         .To<EmailOrderProcessor>()
+       //         .WithConstructorArgument("settings", emailSettings);
+            _ninjectKernel.Bind<IOrderProcessor>()
+                .To<CardOrderProcessor>()
+                .WithConstructorArgument("settings", cardSettings);
         }
+
     }
 }
