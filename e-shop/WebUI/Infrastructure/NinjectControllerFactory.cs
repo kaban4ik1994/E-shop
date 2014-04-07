@@ -33,19 +33,19 @@ namespace WebUI.Infrastructure
 
         private void AddBindings()
         {
-            var mock = new Mock<IProductRepository>();
-            mock.Setup(m => m.Products)
-                .Returns(new List<Product>
-                {
-                    new Product {ProductID = 1,Name = "p1", Price = 20, Category = "cat1" }, 
-                    new Product {ProductID = 2, Name = "p2", Price =25 , Category = "cat2" },
-                    new Product {ProductID = 3, Name = "p3", Price = 30, Category = "cat3" },
-                    new Product {ProductID = 4, Name = "p4", Price = 35, Category = "cat1"},
-                    new Product {ProductID = 5, Name = "p5", Price = 40, Category = "cat5" }
-                }.AsQueryable);
-            _ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
+        //    var mock = new Mock<IProductRepository>();
+     //       mock.Setup(m => m.Products)
+     //           .Returns(new List<Product>
+     //           {
+     //               new Product {ProductID = 1,Name = "p1", Price = 20, Category = "cat1" }, 
+     //               new Product {ProductID = 2, Name = "p2", Price =25 , Category = "cat2" },
+     //               new Product {ProductID = 3, Name = "p3", Price = 30, Category = "cat3" },
+     //               new Product {ProductID = 4, Name = "p4", Price = 35, Category = "cat1"},
+    //                new Product {ProductID = 5, Name = "p5", Price = 40, Category = "cat5" }
+      //          }.AsQueryable);
+      //      _ninjectKernel.Bind<IProductRepository>().ToConstant(mock.Object);
 
-            //  _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
+              _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
          //   var emailSettings = new EmailSettings
         //    {
       //          WriteAsFile = bool.Parse(ConfigurationManager.AppSettings["Email.WriteAsFile"] ?? "false")

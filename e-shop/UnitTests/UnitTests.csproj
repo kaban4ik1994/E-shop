@@ -84,6 +84,7 @@
     <Compile Include="WebUITest\CounterProductsOfACertainCategory.cs" />
     <Compile Include="WebUITest\ControllerCartTest.cs" />
     <Compile Include="WebUITest\OrderProcessorTest.cs" />
+    <Compile Include="WebUITest\AdminControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

@@ -8,14 +8,22 @@ using Domain.Entities;
 
 namespace Domain.Concrete
 {
-   public class EfProductRepository: IProductRepository
+    public class EfProductRepository : IProductRepository
     {
-       private EfDbContext _context=new EfDbContext();
+        private EfDbContext _context = new EfDbContext();
 
-       public IQueryable<Product> Products
-       {
-           get { return _context.Products; }
-       }
+        public IQueryable<Product> Products
+        {
+            get
+            {
+                return _context.Products;
+            }
+        }
 
+        public void SaveProduct(Product product)
+        {
+            if (product.ProductID == 0) _context.Products.Add(product);
+            _context.SaveChanges();
+        }
     }
 }
