@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Domain;
 using Domain.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -63,8 +64,8 @@ namespace UnitTests.DomainTest
         [TestMethod]
         public void Calculate_Cart_Total()//проверка вычисления общей стоимости элементов в корзине
         {
-            var p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
-            var p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
+            var p1 = new Product { ProductID = 1, Name = "P1", ListPrice = 100M };
+            var p2 = new Product { ProductID = 2, Name = "P2", ListPrice = 50M };
             var target = new Cart();
             target.AddItem(p1, 1);
             target.AddItem(p2, 1);
@@ -77,8 +78,8 @@ namespace UnitTests.DomainTest
         [TestMethod]
         public void Can_Clear_Contents()//корректность сброса корзины
         {
-            var p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
-            var p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
+            var p1 = new Product { ProductID = 1, Name = "P1", ListPrice = 100M };
+            var p2 = new Product { ProductID = 2, Name = "P2", ListPrice = 50M };
             var target = new Cart();
             target.AddItem(p1, 1);
             target.AddItem(p2, 1);
@@ -89,13 +90,13 @@ namespace UnitTests.DomainTest
         [TestMethod]
         public void Can_Change_Quantity() //корректность обновления количества товара
         {
-            var p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
-         //   var p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
+            var p1 = new Product { ProductID = 1, Name = "P1", ListPrice = 100M };
+            //   var p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
             var target = new Cart();
-            
-            target.AddItem(p1,1);
-            target.ChangeQuantity(p1,5);
-            Assert.AreEqual(target.Lines.ElementAt(0).Quantity,5);
+
+            target.AddItem(p1, 1);
+            target.ChangeQuantity(p1, 5);
+            Assert.AreEqual(target.Lines.ElementAt(0).Quantity, 5);
         }
     }
 }

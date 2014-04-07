@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.Entities
 {
@@ -36,7 +35,7 @@ namespace Domain.Entities
 
         public decimal ComputeTotalValue()
         {
-            return _lineCollection.Sum(e => e.Product.Price*e.Quantity);
+            return _lineCollection.Sum(e => e.Product.ListPrice*e.Quantity);
         }
 
         public void Clear()

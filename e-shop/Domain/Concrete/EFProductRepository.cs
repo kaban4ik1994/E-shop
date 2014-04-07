@@ -22,7 +22,13 @@ namespace Domain.Concrete
 
         public void SaveProduct(Product product)
         {
-            if (product.ProductID == 0) _context.Products.Add(product);
+       
+            if (product.ProductID == 0)
+            {
+                _context.Products.Add(product);
+         //       _context.ProductCategories.Add(product.ProductCategory);
+         //       _context.ProductDescriptions.Add(product.ProductDescription);
+            }
             _context.SaveChanges();
         }
     }

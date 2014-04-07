@@ -54,7 +54,7 @@ namespace Domain.Concrete
                 var body = new StringBuilder().AppendLine("A new order has been submitted").AppendLine("---").AppendLine("Items:");
                 foreach (var line in cart.Lines)
                 {
-                    var subtotal = line.Product.Price*line.Quantity;
+                    var subtotal = line.Product.ListPrice*line.Quantity;
                     body.AppendFormat("{0} x {1} (subtotal: {2:C}", line.Quantity, line.Product.Name, subtotal);
                 }
 

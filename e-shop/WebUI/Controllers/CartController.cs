@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Domain;
 using Domain.Abstract;
 using Domain.Entities;
 using WebUI.Models;
@@ -47,13 +48,14 @@ namespace WebUI.Controllers
             var product = _repository.Products.FirstOrDefault(p => p.ProductID == productId);
             if (product != null)
             {
-                cart.AddItem(product, quantity);
+                cart.AddItem(product,quantity);
             }
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public RedirectToRouteResult ChangeQuantityInCart(Cart cart, Product product, string returnUrl, int quantity = 1)
+        public RedirectToRouteResult ChangeQuantityInCart(Cart cart, Domain.Product product, string returnUrl, int quantity = 1)
         {
+            
             if (product != null&&quantity>0)
             {
                 cart.ChangeQuantity(product, quantity);

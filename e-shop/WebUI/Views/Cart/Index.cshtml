@@ -29,8 +29,8 @@
                     @line.Quantity
                 </td>
                 <td align="left">@line.Product.Name</td>
-                <td align="right">@line.Product.Price.ToString("C")</td>
-                <td align="right">@((line.Quantity * line.Product.Price).ToString("C"))</td>
+                <td align="right">@line.Product.StandardCost.ToString("C")</td>
+                <td align="right">@((line.Quantity * line.Product.StandardCost).ToString("C"))</td>
                 <td>
                    @using (Html.BeginForm("ChangeQuantityInCart", "Cart"))
                     {
