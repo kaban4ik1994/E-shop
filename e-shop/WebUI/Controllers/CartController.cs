@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Domain;
-using Domain.Abstract;
 using Domain.Entities;
 using WebUI.Models;
 
@@ -12,7 +10,7 @@ namespace WebUI.Controllers
 {
     public class CartController : Controller
     {
-        private IProductRepository _repository;
+          private IProductRepository _repository;
         private IOrderProcessor _orderProcessor;
 
 
@@ -38,7 +36,7 @@ namespace WebUI.Controllers
             }
             else
             {
-                return View(shippingDetails);
+          //      return View(shippingDetails);
             }
         }
 
@@ -87,5 +85,7 @@ namespace WebUI.Controllers
         {
             return View(new ShippingDetails());
         }
+    }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Mvc;
 using Domain.Abstract;
@@ -12,18 +12,18 @@ namespace WebUI.Controllers
     {
         private IProductRepository _repository;
 
-        public NavController(IProductRepository repository)
+        public NavController(IProductRepository productRepository)
         {
-            _repository = repository;
+            _repository = productRepository;
         }
 
-        public PartialViewResult Menu(string category=null)
+        public PartialViewResult Menu(string category = null)
         {
             ViewBag.SelectedCategory = category;
-            var categories = _repository.Products.Select(x => x.ProductCategory.Name).Distinct().OrderBy(x => x);
+            var categories =
+                _repository.Products.Select(x => x.ProductSubcategory.ProductCategory.Name).Distinct().OrderBy(x => x);
             return PartialView(categories);
         }
 
-       
     }
 }

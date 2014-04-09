@@ -1,34 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Abstract;
-using Domain.Entities;
+using System.Data.Entity;
 
 namespace Domain.Concrete
 {
     public class EfProductRepository : IProductRepository
     {
-        private EfDbContext _context = new EfDbContext();
+
+        private AdventureWorks2012_DataEntities _context = new AdventureWorks2012_DataEntities();
+
+
+       
 
         public IQueryable<Product> Products
         {
             get
             {
-                return _context.Products;
+                return _context.Product;
             }
         }
 
-        public void SaveProduct(Product product)
+
+
+        public void SaveToProduct(Product product)
         {
-       
-            if (product.ProductID == 0)
-            {
-                _context.Products.Add(product);
-         //       _context.ProductCategories.Add(product.ProductCategory);
-         //       _context.ProductDescriptions.Add(product.ProductDescription);
-            }
+            if (product.ProductID == 0) _context.Product.Add(product);
             _context.SaveChanges();
         }
     }

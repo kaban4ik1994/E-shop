@@ -1,13 +1,15 @@
-﻿@using System.Web.UI.WebControls
-@model IEnumerable<string>
+﻿@model IEnumerable<string>
 
 @{
     Layout = null;
 }
 @Html.ActionLink("Home", "List", "Product")
 
-@foreach (var link in Model)
+@if (Model != null)
 {
-    @Html.RouteLink(link, new { controller = "Product", action = "List", category = link, page = 1 },//создание ссылок для категорий
-    new { @class = link == ViewBag.SelectedCategory ? "selected" : null })
+foreach (var link in Model)
+ {
+     @Html.RouteLink(link, new {controller = "Product", action = "List", category = link, page = 1}, //создание ссылок для категорий
+         new {@class = link == ViewBag.SelectedCategory ? "selected" : null})
+ }
 }
