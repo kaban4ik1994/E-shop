@@ -7,39 +7,52 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Web.Mvc;
+
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Product
     {
+        public Product()
+        {
+            this.SalesOrderDetail = new HashSet<SalesOrderDetail>();
+
+        }
+        [HiddenInput(DisplayValue = false)]
         public int ProductID { get; set; }
         public string Name { get; set; }
         public string ProductNumber { get; set; }
-        public bool MakeFlag { get; set; }
-        public bool FinishedGoodsFlag { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string Color { get; set; }
-        public short SafetyStockLevel { get; set; }
-        public short ReorderPoint { get; set; }
         public decimal StandardCost { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public decimal ListPrice { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string Size { get; set; }
-        public string SizeUnitMeasureCode { get; set; }
-        public string WeightUnitMeasureCode { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public Nullable<decimal> Weight { get; set; }
-        public int DaysToManufacture { get; set; }
-        public string ProductLine { get; set; }
-        public string Class { get; set; }
-        public string Style { get; set; }
-        public Nullable<int> ProductSubcategoryID { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public Nullable<int> ProductCategoryID { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public Nullable<int> ProductModelID { get; set; }
         public System.DateTime SellStartDate { get; set; }
         public Nullable<System.DateTime> SellEndDate { get; set; }
         public Nullable<System.DateTime> DiscontinuedDate { get; set; }
+        public byte[] ThumbNailPhoto { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public string ThumbnailPhotoFileName { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
-    
-        public virtual ProductSubcategory ProductSubcategory { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
+        public virtual ProductModel ProductModel { get; set; }
+        public virtual ICollection<SalesOrderDetail> SalesOrderDetail { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Domain.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>All Products</h2>
+<p>@Html.ActionLink("Add a new product", "Create")</p>
+<table class="Grid">
+
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Descriprion</th>
+        <th class="NumericCol">Price</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductID</td>
+            <td>@Html.ActionLink(item.Name, "Edit", new { item.ProductID })</td>
+
+            <td>@if (item.ProductModel != null)
+                {
+                    var productModelProductDescriptionCulture = item.ProductModel.ProductModelProductDescription.FirstOrDefault(x => x.Culture == "en    ");
+                    if (productModelProductDescriptionCulture != null)
+                    {
+                @productModelProductDescriptionCulture.ProductDescription.Description
+                    }
+                }
+                @*  *@
+            </td>
+            <td class="NumericCol">@item.StandardCost.ToString("C")</td>
+            <td>@if (item.ProductCategory != null)
+                {
+                @item.ProductCategory.Name
+                }</td>
+            
+            <td>
+                @using (Html.BeginForm("Delete", "Admin"))
+                {
+                    @Html.Hidden("ProductId", item.ProductID)
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+

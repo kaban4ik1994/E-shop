@@ -61,6 +61,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DomainTests\CartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebUITests\CategoryCreationTest.cs" />
     <Compile Include="WebUITests\CounterProductsOfACertainCategory.cs" />
@@ -69,6 +70,9 @@
     <Compile Include="WebUITests\FilterByCategory.cs" />
     <Compile Include="WebUITests\MessageTheSelectedCategoryTest.cs" />
     <Compile Include="WebUITests\ThePaginationTest.cs" />
+    <Compile Include="WebUITests\ControllerCartTest.cs" />
+    <Compile Include="WebUITests\AdminControllerTest.cs" />
+    <Compile Include="WebUITests\AccountControllerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -83,9 +87,7 @@
       <Name>WebUI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DomainTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

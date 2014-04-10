@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Domain.Entities;
+using WebUI.Binders;
 using WebUI.Infrastructure;
 
 namespace WebUI
@@ -21,6 +23,9 @@ namespace WebUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+            ModelBinders.Binders.Add(typeof (Cart), new CartModelBinder());
+            HtmlHelper.ClientValidationEnabled = true;
+            HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
         }
     }
 }

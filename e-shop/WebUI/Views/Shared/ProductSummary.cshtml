@@ -1,5 +1,31 @@
 ﻿@model Domain.Product
 <div class="item">
+
+    @if (Model.ThumbNailPhoto != null)
+    {
+        <div style="float: left; margin-right: 20px">
+            <img width="75" height="75" src="@Url.Action("GetImage", "Product", new { Model.ProductID })"/>
+        </div>
+    }
     <h3>@Model.Name</h3>
+
+    @if (@Model.ProductModel != null)
+    {
+        var productModelProductDescriptionCulture = Model.ProductModel.ProductModelProductDescription.FirstOrDefault(x => x.Culture == "en    ");
+        if (productModelProductDescriptionCulture != null)
+        {
+        @productModelProductDescriptionCulture.ProductDescription.Description
+        }
+    }
+
+    <div class="item">
+
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            @Html.HiddenFor(x => x.ProductID)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            <input type="submit" value="+ Add to cart" />
+        }
+    </div>
     <h4>@Model.StandardCost.ToString("C")</h4>
 </div>

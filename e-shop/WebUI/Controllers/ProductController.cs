@@ -19,27 +19,35 @@ namespace WebUI.Controllers
             _repository = productRepository;
         }
 
-        public ViewResult List(string category, int page=1)
+        public ViewResult List(string category, int page = 1)
         {
-          
+
             var viewModel = new ProductsListViewModel
             {
                 Products = _repository.Products
-                .Where(p=>category==null||p.ProductSubcategory.ProductCategory.Name==category)
+                .Where(p => category == null || p.ProductCategory.Name == category)
                 .OrderBy(p => p.ProductID)
-                    .Skip((page - 1)*PageSize)
+                    .Skip((page - 1) * PageSize)
                     .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = category==null? _repository.Products.Count(): _repository.Products.Count(p=>p.ProductSubcategory.ProductCategory.Name==category)
+                    TotalItems = category == null ? _repository.Products.Count() : _repository.Products.Count(p => p.ProductCategory.Name == category)
                 },
                 CurrentCategory = category
 
             };
             return View(viewModel);
         }
+
+        public FileContentResult GetImage(int productId)
+        {
+            var prod = _repository.Products.FirstOrDefault(p => p.ProductID == productId);
+            return prod != null ? File(prod.ThumbNailPhoto, prod.ThumbnailPhotoFileName) : null;
+        }
+
+
 
     }
 }

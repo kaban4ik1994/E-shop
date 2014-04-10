@@ -65,6 +65,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,7 +74,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IProductRepository.cs" />
+    <Compile Include="Address.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Customer.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerAddress.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,16 +99,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Cart.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="ProductCategory.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductSubcategory.cs">
+    <Compile Include="ProductDescription.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductModel.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductModelProductDescription.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesOrderDetail.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesOrderHeader.cs">
+      <DependentUpon>Data.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -140,9 +163,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -1,0 +1,23 @@
+﻿@model Domain.SalesOrderHeader
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Check out</h2>
+@using (Html.BeginForm())
+{
+
+    @Html.LabelFor(x=>x.CreditCard.CardType)
+    @Html.EditorFor(x=>x.CreditCard.CardType)
+    @Html.LabelFor(x=>x.CreditCard.CardNumber)
+    @Html.EditorFor(x=>x.CreditCard.CardNumber)
+    @Html.LabelFor(x=>x.CreditCard.ExpMonth)
+    @Html.TextBoxFor(x=>x.CreditCard.ExpMonth)
+    @Html.LabelFor(x=>x.CreditCard.ExpYear)
+    @Html.EditorFor(x=>x.CreditCard.ExpYear)
+
+
+
+}

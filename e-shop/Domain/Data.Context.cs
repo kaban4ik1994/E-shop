@@ -13,10 +13,10 @@ namespace Domain
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AdventureWorks2012_DataEntities : DbContext
+    public partial class AdventureWorksLT2012_DataEntities : DbContext
     {
-        public AdventureWorks2012_DataEntities()
-            : base("name=AdventureWorks2012_DataEntities")
+        public AdventureWorksLT2012_DataEntities()
+            : base("name=AdventureWorksLT2012_DataEntities")
         {
         }
     
@@ -25,8 +25,15 @@ namespace Domain
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Address> Address { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustomerAddress> CustomerAddress { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<ProductSubcategory> ProductSubcategory { get; set; }
+        public DbSet<ProductDescription> ProductDescription { get; set; }
+        public DbSet<ProductModel> ProductModel { get; set; }
+        public DbSet<ProductModelProductDescription> ProductModelProductDescription { get; set; }
+        public DbSet<SalesOrderDetail> SalesOrderDetail { get; set; }
+        public DbSet<SalesOrderHeader> SalesOrderHeader { get; set; }
     }
 }

@@ -1,0 +1,77 @@
+﻿@using System.Web.Razor
+@model WebUI.Models.CartIndexViewModel
+
+@{
+    ViewBag.Title = "Your Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+            $('form[action$="/Cart/ChangeQuantity"]').submit(function() {
+                var quantity = $("#line_Quantity").val();
+                $("#quantity").attr('value', quantity);
+            });
+        });
+    
+
+</script>
+
+<h2>Your Cart</h2>
+<table width="90%" align="center">
+    <thead>
+        <tr>
+            <th align="center">Quantity</th>
+            <th align="center">Item</th>
+            <th align="center">Price</th>
+            <th align="center">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var line in Model.Cart.Lines)
+        {
+            
+            <tr>
+                <td align="center">@Html.EditorFor(x => line.Quantity)</td>
+                <td align="center">@line.Product.Name</td>
+                <td align="center">@line.Product.StandardCost.ToString("C")</td>
+                <td align="center">@((line.Product.StandardCost * line.Quantity).ToString("C"))</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                    {
+                        @Html.Hidden("ProductId", line.Product.ProductID)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="actionButtons" type="submit" value="Remove" />
+                    }
+                    @using (Html.BeginForm("ChangeQuantity", "Cart"))
+                    {
+                        
+                        @Html.Hidden("ProductId", line.Product.ProductID)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        @Html.Hidden("quantity")
+                        <div>
+                            <input class="actionButtons" type="submit" value="Refresh" />
+                        </div>
+                        
+                    }
+                </td>
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" align="center">Total:</td>
+            <td align="right">
+                @Model.Cart.ComputeTotalValue().ToString("C")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<p align="center" class="actionButtons">
+    <a href="@Model.ReturnUrl">Continue shopping</a>
+    @Html.ActionLink("Checkout now", "Checkout")
+</p>

@@ -20,10 +20,14 @@ namespace WebUI.Controllers
         public PartialViewResult Menu(string category = null)
         {
             ViewBag.SelectedCategory = category;
+            
             var categories =
-                _repository.Products.Select(x => x.ProductSubcategory.ProductCategory.Name).Distinct().OrderBy(x => x);
+                _repository.Products.
+                Where(x=>x.ProductCategory!=null)
+                .Select(x => x.ProductCategory.Name).Distinct().OrderBy(x => x);
+         
             return PartialView(categories);
         }
-
+       
     }
 }

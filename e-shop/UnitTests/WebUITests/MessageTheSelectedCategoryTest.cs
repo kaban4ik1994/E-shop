@@ -17,18 +17,18 @@ namespace UnitTests.WebUITests
             var mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new[]
             {
-                new Product {ProductID = 1, Name = "P1", ProductSubcategory  =new ProductSubcategory{ProductCategory = new ProductCategory{Name = "A"}}},
-                 new Product {ProductID = 4, Name = "P1", ProductSubcategory  =new ProductSubcategory{ProductCategory = new ProductCategory{Name = "O"}}},
+                new Product {ProductID = 1, Name = "P1", ProductCategory  =new ProductCategory{Name = "A"}},
+                 new Product {ProductID = 4, Name = "P1", ProductCategory  =new ProductCategory{Name = "O"}},
             }.AsQueryable());
 
             var target = new NavController(mock.Object);
 
-           
+
             var categoryToSelect = "A";//определение выбранной категории
             var result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
 
             Assert.AreEqual(categoryToSelect, result);
         }
     }
-    }
+}
 

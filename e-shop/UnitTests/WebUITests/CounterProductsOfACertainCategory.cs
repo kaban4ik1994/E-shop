@@ -18,13 +18,13 @@ namespace UnitTests.WebUITests
             var mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new[]
             {
-                new Product {ProductID = 1, Name = "P1", ProductSubcategory = new ProductSubcategory{ProductCategory = new ProductCategory{Name = "Cat1"}}},
-                    new Product {ProductID = 2, Name = "P2", ProductSubcategory = new ProductSubcategory{ProductCategory = new ProductCategory{Name = "Cat2"}}},
-                        new Product {ProductID = 3, Name = "P3", ProductSubcategory = new ProductSubcategory{ProductCategory = new ProductCategory{Name = "Cat1"}}},
-                            new Product {ProductID = 4, Name = "P4", ProductSubcategory = new ProductSubcategory{ProductCategory = new ProductCategory{Name = "Cat2"}}},
-                                new Product {ProductID = 5, Name = "P5", ProductSubcategory = new ProductSubcategory{ProductCategory = new ProductCategory{Name = "Cat3"}},
+                new Product {ProductID = 1, Name = "P1", ProductCategory = new ProductCategory{Name = "Cat1"}},
+                    new Product {ProductID = 2, Name = "P2", ProductCategory = new ProductCategory{Name = "Cat2"}},
+                        new Product {ProductID = 3, Name = "P3", ProductCategory = new ProductCategory{Name = "Cat1"}},
+                            new Product {ProductID = 4, Name = "P4", ProductCategory = new ProductCategory{Name = "Cat2"}},
+                                new Product {ProductID = 5, Name = "P5", ProductCategory = new ProductCategory{Name = "Cat3"}}
    
-            }}.AsQueryable());
+            }.AsQueryable());
 
             var tagret = new ProductController(mock.Object) { PageSize = 3 };
 

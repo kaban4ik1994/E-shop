@@ -23,25 +23,25 @@ namespace UnitTests.WebUITests
                 {
                     ProductID = 1,
                     Name = "P1",
-                    ProductSubcategory = new ProductSubcategory {ProductCategory = new ProductCategory {Name = "A"}}
+                    ProductCategory = new ProductCategory {Name = "A"}
                 },
                 new Product
                 {
                     ProductID = 1,
                     Name = "P2",
-                    ProductSubcategory = new ProductSubcategory {ProductCategory = new ProductCategory {Name = "A"}}
+                    ProductCategory = new ProductCategory {Name = "A"}
                 },
                 new Product
                 {
                     ProductID = 1,
                     Name = "P3",
-                    ProductSubcategory = new ProductSubcategory {ProductCategory = new ProductCategory {Name = "P"}}
+                    ProductCategory = new ProductCategory {Name = "P"}
                 },
                 new Product
                 {
                     ProductID = 1,
                     Name = "P4",
-                    ProductSubcategory = new ProductSubcategory {ProductCategory = new ProductCategory {Name = "O"}}
+                    ProductCategory = new ProductCategory {Name = "O"}
                 }
             }.AsQueryable());
 
