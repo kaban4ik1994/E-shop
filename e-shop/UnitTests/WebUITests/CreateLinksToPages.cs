@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebUI.Helpers;
 using WebUI.HtmlHelpers;
 using WebUI.Models;
 

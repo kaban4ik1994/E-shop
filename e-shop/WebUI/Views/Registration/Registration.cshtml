@@ -1,0 +1,21 @@
+﻿@model Domain.Customer
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Registration</h2>
+@using (Html.BeginForm("Registration", "Registration", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.NameStyle, false)
+    <text>First Name:</text> @Html.TextBoxFor(r => r.FirstName)
+    @Html.ValidationMessageFor(r => r.FirstName)<br />
+    <text>Last Name: </text> @Html.TextBoxFor(r => r.LastName)
+    @Html.ValidationMessageFor(r => r.LastName)<br />
+    
+    <text>Password: </text> @Html.PasswordFor(r => r.PasswordSalt)
+    @Html.ValidationMessageFor(r => r.PasswordSalt)<br />
+    @Html.HiddenFor(x=>x.ModifiedDate,DateTime.Now)
+    <input type="submit" value="Regestration" />
+} 

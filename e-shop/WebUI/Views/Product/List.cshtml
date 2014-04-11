@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @foreach (var p in Model.Products)
 {
    Html.RenderPartial("ProductSummary",p);

@@ -74,10 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IProductRepository.cs" />
+    <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Address.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>

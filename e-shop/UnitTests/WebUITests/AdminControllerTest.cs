@@ -100,6 +100,7 @@ namespace UnitTests.WebUITests
             mock.Setup(m => m.Products).Returns(new[]
             {
                 new Product {ProductID = 1, Name = "P1"},
+                prod,
                 new Product {ProductID = 2, Name = "P2"}
             }.AsQueryable());
 
@@ -128,6 +129,8 @@ namespace UnitTests.WebUITests
  
             mock.Verify(m => m.DeleteProduct(It.IsAny<Product>()),Times.Never());
         }
+
+
 
     }
 }

@@ -33,6 +33,7 @@ namespace WebUI.Infrastructure
         {
             _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
             _ninjectKernel.Bind<IAuthProvider>().To<FormAuthProvider>();
+            _ninjectKernel.Bind<IUserRepository>().To<EfUserRepository>();
         }
 
     }

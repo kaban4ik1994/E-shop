@@ -139,7 +139,9 @@ DIV#cart {
     padding: .5em .5em .5em 1em;
 }
 
- DIV#cart A {
+
+
+    DIV#cart A {
         text-decoration: none;
         padding: .4em 1em .4em 1em;
         line-height: 2.1em;
@@ -149,6 +151,4 @@ DIV#cart {
         border: 1px solid black;
     }
 
- DIV#changeQyantity {
- 
- }
+

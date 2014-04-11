@@ -1,0 +1,49 @@
+﻿@using Domain.Concrete
+@using WebUI.Helpers
+@using WebUI.HtmlHelpers
+@model WebUI.Models.LogOnViewModel
+
+<style>
+    a:link {
+        color: yellow;
+    }
+
+    a:visited {
+        color: yellow;
+    }
+</style>
+
+<div align="right">
+
+    @if (AuthHelper.IsAuthenticated(Context, new EfUserRepository()))
+    {
+        @AuthHelper.GetUser(Context, new EfUserRepository()).FirstName<br />
+        
+            @AuthHelper.GetUser(Context, new EfUserRepository()).LastName
+        <br />
+        if (AuthHelper.GetUser(Context, new EfUserRepository()).LastName == "admin"
+            && AuthHelper.GetUser(Context, new EfUserRepository()).PasswordSalt == "admin")
+        {
+            @Html.ActionLink("Admin page","Index","Admin")<br/>
+        }
+        @Html.ActionLink("LogOut", "LogOff", "Account")<br />
+    }
+
+    else
+    {
+
+        using (Html.BeginForm("LogIn", "Account", FormMethod.Post))
+        {
+        @Html.Label("Last name:")
+        @Html.TextBoxFor(l => l.UserName)
+        @Html.ValidationMessageFor(l => l.UserName)<br />
+        @Html.Label("Password:")
+        @Html.PasswordFor(l => l.Password)
+        @Html.ValidationMessageFor(l => l.Password)<br />
+        <input type="submit" value="LogIn" />
+        }
+      
+        @Html.ActionLink("Registration", "Registration", "Registration")
+      
+    }
+</div>

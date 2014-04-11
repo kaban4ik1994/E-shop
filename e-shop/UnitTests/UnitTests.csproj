@@ -69,7 +69,7 @@
     <Compile Include="WebUITests\DataPaginationTest.cs" />
     <Compile Include="WebUITests\FilterByCategory.cs" />
     <Compile Include="WebUITests\MessageTheSelectedCategoryTest.cs" />
-    <Compile Include="WebUITests\ThePaginationTest.cs" />
+    <Compile Include="WebUITests\ProductControllerTests.cs" />
     <Compile Include="WebUITests\ControllerCartTest.cs" />
     <Compile Include="WebUITests\AdminControllerTest.cs" />
     <Compile Include="WebUITests\AccountControllerTests.cs" />

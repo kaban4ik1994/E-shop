@@ -1,35 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Domain;
 using Domain.Abstract;
+using Domain.Concrete;
+using WebUI.Helpers;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
-    [Authorize]
+
     public class AdminController : Controller
     {
         private IProductRepository _repository;
 
-        
+
         public AdminController(IProductRepository repository)
         {
             _repository = repository;
         }
 
+        private bool IsAdministrator()
+        {
+            var user = AuthHelper.GetUser(HttpContext, new EfUserRepository());
+            if (user == null) return false;
+            if (user.LastName == "admin" && user.PasswordSalt == "admin") return true;
+            return false;
+        }
+
         public ViewResult Index()
         {
-            return View(_repository.Products);
+            return IsAdministrator() ? View(_repository.Products) : View("Error");
         }
 
         public ViewResult Edit(int productId)
         {
             var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
-           
-            return View(product);
+            return IsAdministrator() ? View(product) : View("Error");
+         
         }
 
         [HttpPost]
@@ -40,7 +51,7 @@ namespace WebUI.Controllers
                 if (image != null)
                 {
                     product.ThumbnailPhotoFileName = image.ContentType;
-                    product.ThumbNailPhoto=new byte[image.ContentLength];
+                    product.ThumbNailPhoto = new byte[image.ContentLength];
                     image.InputStream.Read(product.ThumbNailPhoto, 0, image.ContentLength);
                 }
                 _repository.SaveToProduct(product);
@@ -64,8 +75,10 @@ namespace WebUI.Controllers
 
         public ViewResult Create()
         {
-            return View("Edit", new Product());
+           return IsAdministrator() ? View("Edit",new Product()) : View("Error");
         }
+
+
 
     }
 }
