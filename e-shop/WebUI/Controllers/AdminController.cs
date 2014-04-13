@@ -16,11 +16,12 @@ namespace WebUI.Controllers
     public class AdminController : Controller
     {
         private IProductRepository _repository;
+        private IProductCategoryRepository _productCategoryRepository;
 
-
-        public AdminController(IProductRepository repository)
+        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository)
         {
             _repository = repository;
+            _productCategoryRepository = productCategoryRepository;
         }
 
         private bool IsAdministrator()
@@ -44,9 +45,11 @@ namespace WebUI.Controllers
          
         }
 
+
         [HttpPost]
         public ActionResult Edit(Product product, HttpPostedFileBase image)
         {
+            if (!IsAdministrator()) return View("Error");
             if (ModelState.IsValid)
             {
                 if (image != null)
@@ -62,9 +65,12 @@ namespace WebUI.Controllers
             return View(product);
         }
 
+
+
         [HttpPost]
         public ActionResult Delete(int productId)
         {
+            if (!IsAdministrator()) return View("Error");
             var prod = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
             if (prod != null)
             {
@@ -74,12 +80,30 @@ namespace WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult EditCategory(int productId)
+        {
+            if (!IsAdministrator()) return View("Error");
+            return View(_repository.Products.FirstOrDefault(x=>x.ProductID==productId).ProductCategory);
+        }
+
+        [HttpPost]
+        public ActionResult EditCategory(ProductCategory productCategory)
+        {
+            if (!IsAdministrator()) return View("Error");
+            if (ModelState.IsValid)
+            {
+                productCategory.ModifiedDate = DateTime.Now;
+                _productCategoryRepository.SaveToProductCategory(productCategory);
+                return RedirectToAction("Index");
+            }
+            return View(productCategory);
+        }
+
+
         public ViewResult Create()
         {
            return IsAdministrator() ? View("Edit",new Product()) : View("Error");
         }
-
-
 
     }
 }

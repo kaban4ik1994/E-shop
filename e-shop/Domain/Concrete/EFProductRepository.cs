@@ -19,37 +19,39 @@ namespace Domain.Concrete
         {
             get
             {
+                _context = new AdventureWorksLT2012_DataEntities();
                 return _context.Product;
             }
-        }
 
+        }
 
 
         public void SaveToProduct(Product product)
         {
-          
-            if (product.ProductID == 0)
-                _context.Product.Add(product);
-            
-            _context.Entry(product).State = product.ProductID == 0 ? EntityState.Added : EntityState.Modified;
 
-            _context.SaveChanges();
+            using (var db = new AdventureWorksLT2012_DataEntities())
+            {
+                if (product.ProductID == 0)
+                    db.Product.Add(product);
 
+                db.Entry(product).State = product.ProductID == 0 ? EntityState.Added : EntityState.Modified;
+
+                db.SaveChanges();
+            }
         }
+
+
 
         public void DeleteProduct(Product product)
         {
-
-
-            foreach (var item in Products)
+            using (var db = new AdventureWorksLT2012_DataEntities())
             {
-                _context.Entry(item).State = EntityState.Deleted;
+                db.Entry(product).State = EntityState.Deleted;
+
+                _context.Product.Remove(product);
+                _context.SaveChanges();
             }
 
-
-            _context.Product.Remove(product);
-
-            _context.SaveChanges();
         }
     }
 }

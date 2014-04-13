@@ -36,7 +36,7 @@
             <td class="NumericCol">@item.StandardCost.ToString("C")</td>
             <td>@if (item.ProductCategory != null)
                 {
-                @item.ProductCategory.Name
+              @Html.ActionLink(item.ProductCategory.Name,"EditCategory", new{productId=item.ProductID})
                 }</td>
             
             <td>

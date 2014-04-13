@@ -12,16 +12,13 @@ namespace Domain.Concrete
     public class EfUserRepository : IUserRepository
     {
 
-        private AdventureWorksLT2012_DataEntities _context=new AdventureWorksLT2012_DataEntities();
+        private AdventureWorksLT2012_DataEntities _context = new AdventureWorksLT2012_DataEntities();
 
         public IQueryable<Customer> Users
         {
             get
             {
-                _context.Customer.Include(x => x.CustomerAddress);
-                _context.CustomerAddress.Include(x => x.Address);
-              
-                   return _context.Customer;
+                return _context.Customer;
             }
         }
 
@@ -29,16 +26,14 @@ namespace Domain.Concrete
         {
             using (var db = new AdventureWorksLT2012_DataEntities())
             {
-                var a = db.GetValidationErrors();
+             
                 db.Entry(user).State = user.CustomerID == 0 ? EntityState.Added : EntityState.Modified;
-                db.Customer.Include(x => x.CustomerAddress);
-                db.CustomerAddress.Include(x => x.Address);
-               
+                
                 if (user.CustomerID == 0)
                     db.Customer.Add(user);
                 db.SaveChanges();
-               
-                
+
+
             }
 
         }
@@ -51,6 +46,19 @@ namespace Domain.Concrete
 
             }
 
+        }
+
+        public Address GetAddressesByUserId(int userId)
+        {
+            using (var db = new AdventureWorksLT2012_DataEntities())
+            {
+                var customerAddress = db.CustomerAddress.FirstOrDefault(x=>x.CustomerID==userId);
+                if(customerAddress==null) return new Address();
+                var result = db.Address.FirstOrDefault(x => x.AddressID == customerAddress.AddressID);
+                
+                return result;
+            }
+          
         }
     }
 }

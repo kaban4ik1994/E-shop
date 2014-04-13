@@ -14,6 +14,7 @@ namespace Domain.Abstract
 
         Customer GetCustomerByUniqueidentifier(string uniqueidentifier);
 
+        Address GetAddressesByUserId(int userId);
 
     }
 }

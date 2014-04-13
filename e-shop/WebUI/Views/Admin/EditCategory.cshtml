@@ -1,0 +1,15 @@
+﻿@model Domain.ProductCategory
+
+@{
+    ViewBag.Title = "EditCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>EditCategory</h2>
+
+@using (Html.BeginForm("EditCategory", "Admin", FormMethod.Post))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="save"/>
+    
+}

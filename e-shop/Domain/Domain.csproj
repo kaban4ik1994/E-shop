@@ -73,11 +73,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IAddressCustomerRepository.cs" />
+    <Compile Include="Abstract\IAddressRepository.cs" />
+    <Compile Include="Abstract\IProductCategoryRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Address.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Concrete\EFAddressRepository.cs" />
+    <Compile Include="Concrete\EFCustomerAddressRepository.cs" />
+    <Compile Include="Concrete\EFProductCategoryRepository.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Customer.cs">

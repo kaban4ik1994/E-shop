@@ -15,11 +15,16 @@ namespace WebUI.Controllers
     {
 
         private IUserRepository _userRepository;
+        private IAddressRepository _addressRepository;
+        private IAddressCustomerRepository _addressCustomerRepository;
 
-        public AccountController(IUserRepository userRepository)
+
+        public AccountController(IUserRepository userRepository, IAddressRepository addressRepository, IAddressCustomerRepository addressCustomerRepository)
         {
 
             _userRepository = userRepository;
+            _addressRepository = addressRepository;
+            _addressCustomerRepository = addressCustomerRepository;
         }
 
         [HttpPost]
@@ -58,9 +63,7 @@ namespace WebUI.Controllers
             var user = AuthHelper.GetUser(HttpContext, _userRepository);
             if (user != null)
             {
-                var firstOrDefault = user.CustomerAddress.FirstOrDefault();
-
-                return View(firstOrDefault == null ? new Address() : firstOrDefault.Address);
+                return View(_userRepository.GetAddressesByUserId(user.CustomerID));
             }
             return RedirectToAction("List", "Product");
         }
@@ -74,20 +77,11 @@ namespace WebUI.Controllers
             address.rowguid = Guid.NewGuid();
             if (user != null)
             {
-                if(user.CustomerAddress==null) user.CustomerAddress=new Collection<CustomerAddress>();
-                if (user.CustomerAddress.Count == 0)
-                    user.CustomerAddress.Add(new CustomerAddress()
-                    {
-                        Address = address,
-                        AddressID = 0,
-                        AddressType = "main",
-                        Customer = user,
-                        CustomerID = user.CustomerID,
-                        ModifiedDate = DateTime.Now,
-                        rowguid = Guid.NewGuid()
-                    });
-                else user.CustomerAddress.FirstOrDefault().Address = address;
-                _userRepository.SaveToUser(user);
+
+                _addressRepository.SaveToAddress(address);
+
+                _addressCustomerRepository.SaveToCustomerAddress(_addressCustomerRepository.BindCustomerAddress(user, address));
+
             }
             return RedirectToAction("ProfileUser", "Account");
         }

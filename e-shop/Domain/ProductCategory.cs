@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class ProductCategory
     {
         public ProductCategory()
@@ -19,13 +22,17 @@ namespace Domain
             this.Product = new HashSet<Product>();
             this.ProductCategory1 = new HashSet<ProductCategory>();
         }
-    
+        [HiddenInput(DisplayValue = false)]
         public int ProductCategoryID { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public Nullable<int> ParentProductCategoryID { get; set; }
+        [Required(ErrorMessage = "*")]
         public string Name { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
-    
+
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<ProductCategory> ProductCategory1 { get; set; }
         public virtual ProductCategory ProductCategory2 { get; set; }

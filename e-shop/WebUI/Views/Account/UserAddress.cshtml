@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>UserAddress</h2>
+<h2>User Addresses</h2>
 
 @using (Html.BeginForm("EditAddress", "Account"))
 {
     @Html.EditorForModel()
- <input type="submit" value="Save"/>
+<input type="submit" value="save"/>
 }
