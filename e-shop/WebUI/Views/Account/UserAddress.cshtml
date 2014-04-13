@@ -1,0 +1,14 @@
+﻿@model Domain.Address
+
+@{
+    ViewBag.Title = "UserAddress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserAddress</h2>
+
+@using (Html.BeginForm("EditAddress", "Account"))
+{
+    @Html.EditorForModel()
+ <input type="submit" value="Save"/>
+}

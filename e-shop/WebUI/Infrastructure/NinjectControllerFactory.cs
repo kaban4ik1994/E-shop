@@ -7,8 +7,7 @@ using System.Web.Routing;
 using Domain.Abstract;
 using Domain.Concrete;
 using Ninject;
-using WebUI.Infrastructure.Abstract;
-using WebUI.Infrastructure.Concrete;
+
 
 namespace WebUI.Infrastructure
 {
@@ -32,7 +31,6 @@ namespace WebUI.Infrastructure
         private void AddBindings()
         {
             _ninjectKernel.Bind<IProductRepository>().To<EfProductRepository>();
-            _ninjectKernel.Bind<IAuthProvider>().To<FormAuthProvider>();
             _ninjectKernel.Bind<IUserRepository>().To<EfUserRepository>();
         }
 

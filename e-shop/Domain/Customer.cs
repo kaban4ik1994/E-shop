@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Customer
     {
         public Customer()
@@ -19,23 +22,35 @@ namespace Domain
             this.CustomerAddress = new HashSet<CustomerAddress>();
             this.SalesOrderHeader = new HashSet<SalesOrderHeader>();
         }
-    
+        [HiddenInput(DisplayValue = false)]
         public int CustomerID { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public bool NameStyle { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string Title { get; set; }
+        [Required(ErrorMessage = "*")]
         public string FirstName { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string MiddleName { get; set; }
+        [Required(ErrorMessage = "*")]
         public string LastName { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string Suffix { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string CompanyName { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string SalesPerson { get; set; }
         public string EmailAddress { get; set; }
         public string Phone { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string PasswordHash { get; set; }
+        [Required(ErrorMessage = "*")]
         public string PasswordSalt { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
-    
+
         public virtual ICollection<CustomerAddress> CustomerAddress { get; set; }
         public virtual ICollection<SalesOrderHeader> SalesOrderHeader { get; set; }
     }

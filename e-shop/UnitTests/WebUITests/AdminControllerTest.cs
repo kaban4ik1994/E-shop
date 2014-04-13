@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Domain;
 using Domain.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebUI.Controllers;
+using WebUI.Helpers;
 
 namespace UnitTests.WebUITests
 {
@@ -23,7 +25,7 @@ namespace UnitTests.WebUITests
                 new Product {ProductID = 2, Name = "P2"},
                 new Product {ProductID = 3, Name = "P3"}
             }.AsQueryable());
-
+        
             var target = new AdminController(mock.Object);
             var result = ((IEnumerable<Product>)target.Index().ViewData.Model).ToArray();
             Assert.AreEqual(result.Length, 3);
@@ -42,11 +44,17 @@ namespace UnitTests.WebUITests
                 new Product {ProductID = 2, Name = "P2"},
                 new Product {ProductID = 3, Name = "P3"}
             }.AsQueryable());
+            
 
             var target = new AdminController(mock.Object);
-            var p1 = target.Edit(1).ViewData.Model as Product;
-            var p2 = target.Edit(2).ViewData.Model as Product;
-            var p3 = target.Edit(3).ViewData.Model as Product;
+            
+            target.Edit(1);
+            target.Edit(2);
+            target.Edit(3);
+
+            var p1 = target.ViewData.Model as Product;
+            var p2 = target.ViewData.Model as Product;
+            var p3 = target.ViewData.Model as Product;
             Assert.AreEqual(1, p1.ProductID);
             Assert.AreEqual(2, p2.ProductID);
             Assert.AreEqual(3, p3.ProductID);
@@ -65,7 +73,8 @@ namespace UnitTests.WebUITests
             }.AsQueryable());
 
             var target = new AdminController(mock.Object);
-            var result = (Product)target.Edit(4).ViewData.Model;
+            target.Edit(4);
+            var result = (Product)target.ViewData.Model;
             Assert.IsNull(result);
         }
 

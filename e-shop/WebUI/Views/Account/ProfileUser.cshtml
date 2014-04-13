@@ -1,0 +1,17 @@
+﻿@model Domain.Customer
+
+@{
+    ViewBag.Title = "ProfileUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your profile</h2>
+
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post))
+{
+    @Html.EditorForModel()
+        
+    <input type="submit" value="Save" />
+}
+@Html.ActionLink("Address","UserAddress")
+

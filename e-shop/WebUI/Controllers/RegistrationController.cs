@@ -27,7 +27,7 @@ namespace WebUI.Controllers
         public ActionResult Registration(Customer user)
         {
             user.ModifiedDate = DateTime.Now; // текущее время
-            user.NameStyle = false; // под false у нас роль User (под true - Admin) 
+            user.NameStyle = false;
             user.rowguid = Guid.NewGuid(); 
             user.PasswordHash = Helpers.SecurityHelper.Hash(user.PasswordSalt);
             user.PasswordSalt = user.PasswordSalt;

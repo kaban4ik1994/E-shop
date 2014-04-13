@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Domain.Abstract;
+using PagedList;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -19,9 +20,11 @@ namespace WebUI.Controllers
             _repository = productRepository;
         }
 
+
+
         public ViewResult List(string category, int page = 1)
         {
-
+           
             var viewModel = new ProductsListViewModel
             {
                 Products = _repository.Products
@@ -35,9 +38,13 @@ namespace WebUI.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = category == null ? _repository.Products.Count() : _repository.Products.Count(p => p.ProductCategory.Name == category)
                 },
-                CurrentCategory = category
+                CurrentCategory = category,
+                AllProducts = _repository.Products
 
             };
+
+        
+
             return View(viewModel);
         }
 

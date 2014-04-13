@@ -8,7 +8,7 @@ namespace Domain.Abstract
 {
     public interface IUserRepository
     {
-        IQueryable<Customer> Users { get; }
+       IQueryable<Customer> Users { get; }
 
         void SaveToUser(Customer user);
 

@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using WebUI.Controllers;
-using WebUI.Infrastructure.Abstract;
 using WebUI.Models;
 
 namespace UnitTests.WebUITests

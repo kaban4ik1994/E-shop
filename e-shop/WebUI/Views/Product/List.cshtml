@@ -1,17 +1,32 @@
 ﻿@using WebUI.HtmlHelpers
 @model WebUI.Models.ProductsListViewModel
-
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using (Html.BeginForm())
+{ 
+    <p>
+        Name: @Html.TextBox("SearchString")
+        Min Cost:@Html.DropDownList("MinCost", new SelectList(Model.AllProducts.OrderBy(x => x.StandardCost).Select(x => x.StandardCost)))
+        Max Cost:@Html.DropDownList("MaxCost", new SelectList(Model.AllProducts.OrderBy(x => x.StandardCost).Select(x => x.StandardCost)))
+        <input type="submit" value="Search" />
+    </p> 
+}
+
+
+
+<span style="padding: 0 30px;">
+    @Html.ActionLink("Sort by price", "List", new { page = Model.PagingInfo.CurrentPage, category = Model.CurrentCategory, sortOrder = ViewBag.CostSortParam })
+</span>
+@Html.ActionLink("Sort by name", "List", new { page = Model.PagingInfo.CurrentPage, category = Model.CurrentCategory, sortOrder = ViewBag.NameSortParam })
 
 @foreach (var p in Model.Products)
 {
-   Html.RenderPartial("ProductSummary",p);
+    Html.RenderPartial("ProductSummary", p);
 }
 
 <div class="pager">
-    @Html.PageLinks(Model.PagingInfo, x=>Url.Action("List", new {page=x, category=Model.CurrentCategory}))
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
 </div>

@@ -5,11 +5,11 @@
 
 <style>
     a:link {
-        color: yellow;
+        color: red;
     }
 
     a:visited {
-        color: yellow;
+        color: red;
     }
 </style>
 
@@ -17,16 +17,19 @@
 
     @if (AuthHelper.IsAuthenticated(Context, new EfUserRepository()))
     {
-        @AuthHelper.GetUser(Context, new EfUserRepository()).FirstName<br />
-        
-            @AuthHelper.GetUser(Context, new EfUserRepository()).LastName
+        @AuthHelper.GetUser(Context, new EfUserRepository()).FirstName 
+        <text>   </text>
+        @AuthHelper.GetUser(Context, new EfUserRepository()).LastName
         <br />
         if (AuthHelper.GetUser(Context, new EfUserRepository()).LastName == "admin"
             && AuthHelper.GetUser(Context, new EfUserRepository()).PasswordSalt == "admin")
         {
-            @Html.ActionLink("Admin page","Index","Admin")<br/>
+        @Html.ActionLink("Admin page", "Index", "Admin") 
+        <text>    </text>
         }
-        @Html.ActionLink("LogOut", "LogOff", "Account")<br />
+        @Html.ActionLink("Profile", "ProfileUser", "Account"); 
+        <text>    </text>
+        @Html.ActionLink("LogOut", "LogOff", "Account")
     }
 
     else

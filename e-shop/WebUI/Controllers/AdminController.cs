@@ -33,10 +33,11 @@ namespace WebUI.Controllers
 
         public ViewResult Index()
         {
+           
             return IsAdministrator() ? View(_repository.Products) : View("Error");
         }
 
-        public ViewResult Edit(int productId)
+        public ActionResult Edit(int productId)
         {
             var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
             return IsAdministrator() ? View(product) : View("Error");

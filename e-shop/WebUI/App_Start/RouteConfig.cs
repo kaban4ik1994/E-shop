@@ -16,7 +16,10 @@ namespace WebUI
 
             routes.MapRoute(null,"",new{controller="Product",action="List",category=(string)null, page=1 });
 
-    
+            routes.MapRoute("Registration", "registration", new {controller = "Registration", action = "Registration"});
+
+            routes.MapRoute("Cart", "Cart", new { controller = "Cart", action = "Index" });
+
 
             routes.MapRoute(null, "Page{page}",
                new {Controller="Product", action="List", category=(string)null}, new {page = @"\d+"});
