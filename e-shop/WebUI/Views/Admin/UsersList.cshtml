@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Domain.Customer>
+@{
+    ViewBag.Title = "UsersList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Users </h2>
+
+@using (Html.BeginForm())
+{
+    
+    <p>
+        Search string: @Html.TextBox("SearchString", ViewBag.CurrentFilterName as string)
+        <input type="submit" value="Search" />
+    </p> 
+}
+
+
+<table class="Grid">
+
+    <tr>
+        <th>Reports</th>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Company name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Modified date</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.ActionLink("Reports", "StatisticsUser", new {userId=item.CustomerID})</td>
+            <td>@item.CustomerID</td>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.CompanyName</td>
+            <td>@item.EmailAddress</td>
+            <td>@item.Phone</td>
+            <td>@item.ModifiedDate</td>
+        </tr>
+    }
+    </table>

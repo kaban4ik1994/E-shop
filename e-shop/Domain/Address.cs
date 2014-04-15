@@ -7,14 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Address
     {
         public Address()
@@ -23,25 +20,17 @@ namespace Domain
             this.SalesOrderHeader = new HashSet<SalesOrderHeader>();
             this.SalesOrderHeader1 = new HashSet<SalesOrderHeader>();
         }
-        [HiddenInput(DisplayValue = false)]
+    
         public int AddressID { get; set; }
-        [Required(ErrorMessage = "*")]
         public string AddressLine1 { get; set; }
-
         public string AddressLine2 { get; set; }
-        [Required(ErrorMessage = "*")]
         public string City { get; set; }
-        [Required(ErrorMessage = "*")]
         public string StateProvince { get; set; }
-        [Required(ErrorMessage = "*")]
         public string CountryRegion { get; set; }
-        [Required(ErrorMessage = "*")]
         public string PostalCode { get; set; }
-        [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }
-        [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
-
+    
         public virtual ICollection<CustomerAddress> CustomerAddress { get; set; }
         public virtual ICollection<SalesOrderHeader> SalesOrderHeader { get; set; }
         public virtual ICollection<SalesOrderHeader> SalesOrderHeader1 { get; set; }

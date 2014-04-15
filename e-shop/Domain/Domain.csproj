@@ -77,6 +77,8 @@
     <Compile Include="Abstract\IAddressRepository.cs" />
     <Compile Include="Abstract\IProductCategoryRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
+    <Compile Include="Abstract\ISalesOrderDetail.cs" />
+    <Compile Include="Abstract\ISalesOrderHeader.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Address.cs">
       <DependentUpon>Data.tt</DependentUpon>
@@ -85,6 +87,8 @@
     <Compile Include="Concrete\EFCustomerAddressRepository.cs" />
     <Compile Include="Concrete\EFProductCategoryRepository.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Concrete\EFSalesOrderDetails.cs" />
+    <Compile Include="Concrete\EFSalesOrderHeader.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Data.tt</DependentUpon>
@@ -108,6 +112,9 @@
       <DependentUpon>Data.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\Cart.cs" />
+    <Compile Include="Entities\Reports.cs" />
+    <Compile Include="Entities\ReportProductModel.cs" />
+    <Compile Include="Entities\ReportUserModel.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>

@@ -29,10 +29,10 @@ namespace UnitTests.WebUITests
             //создание контроллера и установка размера
             var controller = new ProductController(mock.Object) { PageSize = 3 };
             //действие
-            var result = (ProductsListViewModel)controller.List(null, 2).Model;
+            var result = (ProductsListViewModel)controller.List(null, null, null, null, null, null, null, null, 1).Model;
             // утверждение
             var pageInfo = result.PagingInfo;
-            Assert.AreEqual(pageInfo.CurrentPage, 2);
+            Assert.AreEqual(pageInfo.CurrentPage, 1);
             Assert.AreEqual(pageInfo.ItemsPerPage, 3);
             Assert.AreEqual(pageInfo.TotalItems, 5);
             Assert.AreEqual(pageInfo.TotalPages, 2);

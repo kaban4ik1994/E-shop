@@ -29,10 +29,10 @@ namespace UnitTests.WebUITests
             var tagret = new ProductController(mock.Object) { PageSize = 3 };
 
             //тестирование счетчиков товаров для различных категорий
-            var res1 = ((ProductsListViewModel)tagret.List("Cat1").Model).PagingInfo.TotalItems;
-            var res2 = ((ProductsListViewModel)tagret.List("Cat2").Model).PagingInfo.TotalItems;
-            var res3 = ((ProductsListViewModel)tagret.List("Cat3").Model).PagingInfo.TotalItems;
-            var resAll = ((ProductsListViewModel)tagret.List(null).Model).PagingInfo.TotalItems;
+            var res1 = ((ProductsListViewModel)tagret.List(null,null,null,null,null,null,null,"Cat1").Model).PagingInfo.TotalItems;
+            var res2 = ((ProductsListViewModel)tagret.List(null, null, null, null, null, null, null, "Cat2").Model).PagingInfo.TotalItems;
+            var res3 = ((ProductsListViewModel)tagret.List(null, null, null, null, null, null, null, "Cat3").Model).PagingInfo.TotalItems;
+            var resAll = ((ProductsListViewModel)tagret.List(null, null, null, null, null, null, null, null).Model).PagingInfo.TotalItems;
 
             //
 

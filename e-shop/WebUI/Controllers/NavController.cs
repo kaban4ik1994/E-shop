@@ -23,7 +23,7 @@ namespace WebUI.Controllers
             
             var categories =
                 _repository.Products.
-                Where(x=>x.ProductCategory!=null)
+                Where(x=>x.ProductCategory!=null &&x.SellEndDate==null)
                 .Select(x => x.ProductCategory.Name).Distinct().OrderBy(x => x);
          
             return PartialView(categories);

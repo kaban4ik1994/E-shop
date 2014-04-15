@@ -19,7 +19,6 @@ namespace Domain.Concrete
         {
             get
             {
-                _context = new AdventureWorksLT2012_DataEntities();
                 return _context.Product;
             }
 
@@ -29,29 +28,16 @@ namespace Domain.Concrete
         public void SaveToProduct(Product product)
         {
 
-            using (var db = new AdventureWorksLT2012_DataEntities())
-            {
-                if (product.ProductID == 0)
-                    db.Product.Add(product);
-
-                db.Entry(product).State = product.ProductID == 0 ? EntityState.Added : EntityState.Modified;
-
-                db.SaveChanges();
-            }
-        }
-
-
-
-        public void DeleteProduct(Product product)
-        {
-            using (var db = new AdventureWorksLT2012_DataEntities())
-            {
-                db.Entry(product).State = EntityState.Deleted;
-
-                _context.Product.Remove(product);
-                _context.SaveChanges();
-            }
-
+            if (product.ProductID == 0)
+                _context.Product.Add(product);
+          
+            _context.Entry(product).State = product.ProductID == 0 ? EntityState.Added : EntityState.Modified;
+            _context.SaveChanges();
         }
     }
+
+
+
 }
+
+     

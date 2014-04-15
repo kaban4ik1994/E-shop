@@ -1,0 +1,41 @@
+﻿@using System.Collections
+@using System.ComponentModel
+@model List<Domain.Entities.ReportProductModel>
+@{
+    ViewBag.Title = "StatisticsSales";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+   
+}
+
+<h2>StatisticsSales</h2>
+
+
+
+
+@using (Html.BeginForm())
+{
+    <p>
+  MinDate: @Html.DropDownList("MinDate",new SelectList(ViewBag.Date))
+  MaxDate  @Html.DropDownList("MaxDate",new SelectList(ViewBag.Date))
+        <input type="submit" value="Search" />
+    </p> 
+}
+
+<table class="Grid">
+    <tr>
+        <th>Name</th>
+        <th>Product</th>
+        <th>Number</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var report in Model)
+    {<tr>
+        <td>@Html.DisplayFor(x=>report.Name)</td>
+        <td>@Html.DisplayFor(x => report.DateTime)</td>
+        <td>@Html.DisplayFor(x => report.NumberOsSales)</td>
+        <td>@Html.DisplayFor(x => report.Amount)</td>
+    </tr>
+    }
+</table>
+<h3>@Html.ActionLink("Return", "Index")
+</h3>

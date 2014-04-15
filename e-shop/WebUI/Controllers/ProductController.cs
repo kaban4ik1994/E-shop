@@ -14,7 +14,7 @@ namespace WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        public int PageSize = 30;
+        public int PageSize = 20;
         private IProductRepository _repository;
 
         public ProductController(IProductRepository productRepository)
@@ -26,11 +26,12 @@ namespace WebUI.Controllers
         public ViewResult List(string sortOrder, string currentFilterName, string currentFilterMinCost, string currentFilterMaxCost, string searchString, string minCost, string maxCost, string category, int page = 1)
         {
 
-            var products = _repository.Products.ToList();
+            var products = _repository.Products.Where(x => x.SellEndDate == null).ToList();
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "Name desc" : "";
             ViewBag.CostSortParam = sortOrder == "Cost" ? "Cost desc" : "Cost";
-            if (Request.HttpMethod == "GET")
+            if (Request != null && Request.HttpMethod == "GET")
             {
                 searchString = currentFilterName;
                 minCost = currentFilterMinCost;
@@ -53,8 +54,8 @@ namespace WebUI.Controllers
 
             decimal dminCost;
             decimal dmaxCost;
-            
-            if (!String.IsNullOrEmpty(minCost) && !String.IsNullOrEmpty(maxCost) && decimal.TryParse(minCost, out dminCost)&& decimal.TryParse(maxCost, out dmaxCost))
+
+            if (!String.IsNullOrEmpty(minCost) && !String.IsNullOrEmpty(maxCost) && decimal.TryParse(minCost, out dminCost) && decimal.TryParse(maxCost, out dmaxCost))
             {
 
                 products =

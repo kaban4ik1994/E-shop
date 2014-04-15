@@ -37,7 +37,6 @@ namespace WebUI.Helpers
         public static Customer GetUser(HttpContextBase httpContext, IUserRepository users)
         {
             var authCookie = httpContext.Request.Cookies["__AUTH"];
-
             if (authCookie != null)
             {
                 var user = users.GetCustomerByUniqueidentifier(authCookie.Value);

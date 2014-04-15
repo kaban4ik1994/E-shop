@@ -6,17 +6,19 @@ using Domain;
 using Domain.Abstract;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Ninject.Activation;
 using WebUI.Controllers;
 using WebUI.Models;
 
 namespace UnitTests.WebUITests
 {
     [TestClass]
-    public class ProductControllerTests
+    public class ProductControllerTests // 
     {
         [TestMethod]
         public void Can_Paginate()// Корректность разбиения на страницы
         {
+            
             var mosk = new Mock<IProductRepository>();
             mosk.Setup(m => m.Products).Returns(new[]
             {
@@ -29,12 +31,13 @@ namespace UnitTests.WebUITests
 
             var controller = new ProductController(mosk.Object) { PageSize = 3 };
 
-            var result = (ProductsListViewModel)controller.List(null, 2).Model;
+            var result = (ProductsListViewModel)controller.List(null, null, null, null, null, null, null, null, 1).Model;
 
             var prodArray = result.Products.ToArray();
-            Assert.IsTrue(prodArray.Length == 2);
-            Assert.AreEqual(prodArray[0].Name, "P4");
-            Assert.AreEqual(prodArray[1].Name, "P5");
+            Assert.IsTrue(prodArray.Length == 3);
+            Assert.AreEqual(prodArray[0].Name, "P1");
+            Assert.AreEqual(prodArray[1].Name, "P2");
+            Assert.AreEqual(prodArray[2].Name, "P3");
         }
 
         [TestMethod]

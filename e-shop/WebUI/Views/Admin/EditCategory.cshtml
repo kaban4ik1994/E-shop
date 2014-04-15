@@ -1,4 +1,7 @@
-﻿@model Domain.ProductCategory
+﻿@using System.Collections.ObjectModel
+@using System.Web.UI.WebControls
+@using Domain
+@model List<Domain.ProductCategory>
 
 @{
     ViewBag.Title = "EditCategory";
@@ -9,7 +12,8 @@
 
 @using (Html.BeginForm("EditCategory", "Admin", FormMethod.Post))
 {
-    @Html.EditorForModel()
-    <input type="submit" value="save"/>
-    
+    @Html.DropDownList("Name", new SelectList(Model.Select(x => x.Name)))
+    @Html.HiddenFor(x=>x.FirstOrDefault().ProductCategoryID)
+    @Html.Hidden("productId",(int)ViewBag.ProductId)
+    <input type="submit" value="save" />
 }

@@ -11,7 +11,6 @@ namespace Domain.Abstract
         IQueryable<Product> Products { get; }
         void SaveToProduct(Product product);
 
-        void DeleteProduct(Product product);
 
     }
 }

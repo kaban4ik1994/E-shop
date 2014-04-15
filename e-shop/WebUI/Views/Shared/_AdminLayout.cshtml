@@ -1,13 +1,28 @@
 ﻿<!DOCTYPE html>
 
+
+@{
+  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+ 
+}
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Admin.css")" rel="stylesheet" type="text/css"/>
-    
+
 </head>
 <body>
+    <h4>
+        <span style="padding: 0 30px">
+        @Html.ActionLink("Products", "Index", "Admin")
+            </span>
+        @Html.ActionLink("Users", "UsersList", "Admin")
+        <span style="padding: 0 30px"> @Html.ActionLink("StatisticsSales","StatisticsSales","Admin")
+            </span>
+    </h4>
     <div>
         @if (TempData["message"] != null)
         {

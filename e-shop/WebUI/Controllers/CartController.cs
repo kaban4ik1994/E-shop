@@ -36,7 +36,7 @@ namespace WebUI.Controllers
         {
             if (quantity < 1) quantity = 1;
             var product = _repository.Products.FirstOrDefault(p => p.ProductID == productId);
-            if(product!=null) cart.ChangeQuantity(product,quantity);
+            if (product != null) cart.ChangeQuantity(product, quantity);
             return RedirectToAction("Index", new {returnUrl});
         }
 

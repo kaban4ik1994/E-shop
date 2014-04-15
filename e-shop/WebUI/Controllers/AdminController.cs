@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Domain;
 using Domain.Abstract;
 using Domain.Concrete;
+using Domain.Entities;
 using WebUI.Helpers;
 using WebUI.Models;
 
@@ -17,11 +18,17 @@ namespace WebUI.Controllers
     {
         private IProductRepository _repository;
         private IProductCategoryRepository _productCategoryRepository;
+        private ISalesOrderDetail _salesOrderDetail;
+        private ISalesOrderHeader _salesOrderHeader;
+        private IUserRepository _userRepository;
 
-        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository)
+        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository, ISalesOrderDetail salesOrderDetail, IUserRepository userRepository, ISalesOrderHeader salesOrderHeader)
         {
             _repository = repository;
             _productCategoryRepository = productCategoryRepository;
+            _salesOrderDetail = salesOrderDetail;
+            _userRepository = userRepository;
+            _salesOrderHeader = salesOrderHeader;
         }
 
         private bool IsAdministrator()
@@ -32,17 +39,47 @@ namespace WebUI.Controllers
             return false;
         }
 
-        public ViewResult Index()
+        public ViewResult Index(string currentFilterName, string searchString)
         {
-           
-            return IsAdministrator() ? View(_repository.Products) : View("Error");
+            var products = _repository.Products.ToList();
+            if (Request.HttpMethod == "GET")
+            {
+                searchString = currentFilterName;
+            }
+            ViewBag.CurrentFilterName = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Name.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+
+            return IsAdministrator() ? View(products) : View("Error");
+        }
+
+        public ViewResult UsersList(string currentFilterName, string searchString)
+        {
+            var users = _userRepository.Users.ToList();
+            if (Request.HttpMethod == "GET")
+            {
+                searchString = currentFilterName;
+            }
+            ViewBag.CurrentFilterName = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.LastName.ToUpper().Contains(searchString.ToUpper()) ||
+                     s.FirstName.ToUpper().Contains(searchString.ToUpper())).ToList();
+            }
+
+            return IsAdministrator() ? View(users) : View("Error");
         }
 
         public ActionResult Edit(int productId)
         {
             var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
             return IsAdministrator() ? View(product) : View("Error");
-         
+
         }
 
 
@@ -66,43 +103,94 @@ namespace WebUI.Controllers
         }
 
 
-
-        [HttpPost]
-        public ActionResult Delete(int productId)
-        {
-            if (!IsAdministrator()) return View("Error");
-            var prod = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
-            if (prod != null)
-            {
-                _repository.DeleteProduct(prod);
-                TempData["message"] = string.Format("{0} was deleted", prod.Name);
-            }
-            return RedirectToAction("Index");
-        }
-
         public ActionResult EditCategory(int productId)
         {
             if (!IsAdministrator()) return View("Error");
-            return View(_repository.Products.FirstOrDefault(x=>x.ProductID==productId).ProductCategory);
+            ViewBag.ProductId = productId;
+            return View(_productCategoryRepository.ProductCategories.ToList());
         }
 
         [HttpPost]
-        public ActionResult EditCategory(ProductCategory productCategory)
+        [ValidateInput(false)]
+        public ActionResult EditCategory(ProductCategory productCategory, int productId)
         {
             if (!IsAdministrator()) return View("Error");
-            if (ModelState.IsValid)
+            var category =
+                _productCategoryRepository.ProductCategories.FirstOrDefault(x => x.Name == productCategory.Name);
+
+
+            var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
+            //  product.ProductCategory = category;
+            product.ProductCategoryID = category.ProductCategoryID;
+            _repository.SaveToProduct(product);
+            return RedirectToAction("Index");
+
+            return View(_productCategoryRepository.ProductCategories.ToList());
+        }
+
+        public ActionResult CreateCategory(ProductCategory productCategory)
+        {
+            if (!IsAdministrator()) return View("Error");
+            if (productCategory.Name != null)
             {
                 productCategory.ModifiedDate = DateTime.Now;
+                productCategory.rowguid = Guid.NewGuid();
                 _productCategoryRepository.SaveToProductCategory(productCategory);
                 return RedirectToAction("Index");
             }
-            return View(productCategory);
-        }
 
+            return View(new ProductCategory());
+        }
 
         public ViewResult Create()
         {
-           return IsAdministrator() ? View("Edit",new Product()) : View("Error");
+            return IsAdministrator() ? View("Edit", new Product()) : View("Error");
+        }
+
+        public ActionResult StatisticsProduct(int productId)
+        {
+            if (!IsAdministrator()) return View("Error");
+            var report = new Reports(_salesOrderDetail, _salesOrderHeader);
+            TempData["Product"] = _repository.Products.FirstOrDefault(x => x.ProductID == productId).Name;
+            return View(report.GetProductReport(productId));
+        }
+
+        public ActionResult StatisticsUser(int userId)
+        {
+            if (!IsAdministrator()) return View("Error");
+            var report = new Reports(_salesOrderDetail, _salesOrderHeader);
+            TempData["User"] = _userRepository.Users.FirstOrDefault(x => x.CustomerID == userId).LastName;
+            return View(report.GetUserReport(userId));
+        }
+
+        public ActionResult StatisticsSales(string minDate = null, string maxDate = null)
+        {
+            if (!IsAdministrator()) return View("Error");
+
+            var report = new Reports(_salesOrderDetail, _salesOrderHeader);
+            ViewBag.Date = report.GetStatisticsBySales().Select(y => y.DateTime).Distinct();
+            if (minDate != null && maxDate != null)
+            {
+                var result =
+                    report.GetStatisticsBySales().Where(x => x.DateTime.CompareTo(Convert.ToDateTime(minDate)) >= 0
+                                                             &&
+                                                             x.DateTime.CompareTo(Convert.ToDateTime(maxDate)) <= 0);
+                return View(result.ToList());
+            }
+            return View(report.GetStatisticsBySales());
+        }
+
+
+        public ActionResult ChangeSellEndDate(int productId)
+        {
+            var a = ModelState.IsValid;
+            if (!IsAdministrator()) return View("Error");
+            var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
+            if (product != null && product.SellEndDate != null)
+                product.SellEndDate = null;
+            else if (product != null) product.SellEndDate = DateTime.Now;
+            _repository.SaveToProduct(product);
+            return RedirectToAction("Index");
         }
 
     }

@@ -1,0 +1,37 @@
+﻿@using Domain.Entities
+@model List<Domain.Entities.ReportUserModel>
+@{
+    ViewBag.Title = "StatisticsUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "StatisticsUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>@TempData["User"]</h2>
+@foreach (var r in Model)
+{
+    <span style="padding: 30px 10px">Order date @r.OrderDate</span>
+    <span style="padding: 30px 10px">Sub Total @r.SubTotal</span>
+   
+    
+    <h4>Contents</h4>
+    <table class="Grid">
+        <tr>
+            <th>Product</th>
+            <th>Number</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var p in r.Products)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => p.Name)</td>
+                <td>@Html.DisplayFor(x => p.NumberOsSales)</td>
+                <td>@Html.DisplayFor(x => p.Amount)</td>
+            </tr>
+        }
+    </table>
+}

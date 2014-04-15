@@ -10,12 +10,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-            $('form[action$="/Cart/ChangeQuantity"]').submit(function() {
-                var quantity = $("#line_Quantity").val();
-                $("#quantity").attr('value', quantity);
-            });
+        $('form[action$="/Cart/ChangeQuantity"]').submit(function () {
+            var quantity = $("#line_Quantity").val();
+            $("#quantity").attr('value', quantity);
         });
-    
+    });
+
 
 </script>
 
@@ -35,7 +35,22 @@
         {
             
             <tr>
-                <td align="center">@Html.EditorFor(x => line.Quantity)</td>
+
+                <td align="center">
+
+                    @using (Html.BeginForm("ChangeQuantity", "Cart"))
+                    {
+                        
+                        @Html.Hidden("ProductId", line.Product.ProductID)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        var quantity = line.Quantity;
+                        @Html.EditorFor(x=>quantity)
+                        <div>
+                            <input class="actionButtons" type="submit" value="Refresh" />
+                        </div>  
+                    }
+
+                </td>
                 <td align="center">@line.Product.Name</td>
                 <td align="center">@line.Product.StandardCost.ToString("C")</td>
                 <td align="center">@((line.Product.StandardCost * line.Quantity).ToString("C"))</td>
@@ -46,17 +61,7 @@
                         @Html.HiddenFor(x => x.ReturnUrl)
                         <input class="actionButtons" type="submit" value="Remove" />
                     }
-                    @using (Html.BeginForm("ChangeQuantity", "Cart"))
-                    {
-                        
-                        @Html.Hidden("ProductId", line.Product.ProductID)
-                        @Html.HiddenFor(x => x.ReturnUrl)
-                        @Html.Hidden("quantity")
-                        <div>
-                            <input class="actionButtons" type="submit" value="Refresh" />
-                        </div>
-                        
-                    }
+
                 </td>
             </tr>
         }

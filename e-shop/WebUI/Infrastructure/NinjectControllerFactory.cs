@@ -35,6 +35,8 @@ namespace WebUI.Infrastructure
             _ninjectKernel.Bind<IAddressRepository>().To<EfAddressRepository>();
             _ninjectKernel.Bind<IAddressCustomerRepository>().To<EFCustomerAddressRepository>();
             _ninjectKernel.Bind<IProductCategoryRepository>().To<EFProductCategoryRepository>();
+            _ninjectKernel.Bind<ISalesOrderDetail>().To<EFSalesOrderDetails>();
+            _ninjectKernel.Bind<ISalesOrderHeader>().To<EFSalesOrderHeader>();
         }
 
     }

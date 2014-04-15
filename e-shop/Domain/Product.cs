@@ -30,7 +30,7 @@ namespace Domain
         [HiddenInput(DisplayValue = false)]
         public string Color { get; set; }
         [Required(ErrorMessage = "*")]
-        [Range(0.01, double.MaxValue, ErrorMessage = "*")]
+        [Range(0.01,double.MaxValue, ErrorMessage = "*")]
         public decimal StandardCost { get; set; }
         [HiddenInput(DisplayValue = false)]
         public decimal ListPrice { get; set; }

@@ -5,21 +5,40 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>All Products</h2>
-<p>@Html.ActionLink("Add a new product", "Create")</p>
+<h2>Products</h2>
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    
+    <p>
+        Name: @Html.TextBox("SearchString", ViewBag.CurrentFilterName as string)
+        <input type="submit" value="Search" />
+    </p> 
+}
+
+<span style="padding: 0 30px">
+@Html.ActionLink("Add a new product", "Create")
+</span>
+@Html.ActionLink("Add a new category", "CreateCategory")
 <table class="Grid">
 
     <tr>
+        <th>Reports</th>
         <th>ID</th>
         <th>Name</th>
         <th>Descriprion</th>
         <th class="NumericCol">Price</th>
         <th>Category</th>
-        <th>Actions</th>
+        <th>SellEndDate</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
+            <td>@Html.ActionLink("Reports", "StatisticsProduct", new { item.ProductID })</td>
             <td>@item.ProductID</td>
             <td>@Html.ActionLink(item.Name, "Edit", new { item.ProductID })</td>
 
@@ -31,21 +50,19 @@
                 @productModelProductDescriptionCulture.ProductDescription.Description
                     }
                 }
-                @*  *@
+
             </td>
             <td class="NumericCol">@item.StandardCost.ToString("C")</td>
             <td>@if (item.ProductCategory != null)
                 {
-              @Html.ActionLink(item.ProductCategory.Name,"EditCategory", new{productId=item.ProductID})
+                @Html.ActionLink(item.ProductCategory.Name, "EditCategory", new { productId=item.ProductID })
                 }</td>
-            
+
             <td>
-                @using (Html.BeginForm("Delete", "Admin"))
-                {
-                    @Html.Hidden("ProductId", item.ProductID)
-                    <input type="submit" value="Delete" />
-                }
+                @Html.ActionLink(item.SellEndDate!=null?item.SellEndDate.ToString():"----","ChangeSellEndDate", new{productId=item.ProductID})
+                              
             </td>
+ 
         </tr>
     }
 
