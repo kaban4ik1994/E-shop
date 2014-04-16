@@ -21,7 +21,8 @@ namespace WebUI.Controllers
         private IAddressCustomerRepository _addressCustomerRepository;
         private ISalesOrderHeader _salesOrderHeader;
 
-        public AccountController(IUserRepository userRepository, IAddressRepository addressRepository, IAddressCustomerRepository addressCustomerRepository, ISalesOrderHeader salesOrderHeader)
+        public AccountController(IUserRepository userRepository, IAddressRepository addressRepository,
+            IAddressCustomerRepository addressCustomerRepository, ISalesOrderHeader salesOrderHeader)
         {
 
             _userRepository = userRepository;
@@ -33,7 +34,9 @@ namespace WebUI.Controllers
         [HttpPost]
         public ActionResult Login(LogOnViewModel model)
         {
-            var user = _userRepository.Users.FirstOrDefault(x => x.EmailAddress == model.UserName && x.PasswordSalt == model.Password);
+            var user =
+                _userRepository.Users.FirstOrDefault(
+                    x => x.EmailAddress == model.UserName && x.PasswordSalt == model.Password);
             if (user != null)
             {
                 Helpers.AuthHelper.LogInUser(HttpContext, user.rowguid.ToString());
@@ -81,7 +84,8 @@ namespace WebUI.Controllers
             if (user != null)
             {
                 _addressRepository.SaveToAddress(address);
-                _addressCustomerRepository.SaveToCustomerAddress(_addressCustomerRepository.BindCustomerAddress(user, address));
+                _addressCustomerRepository.SaveToCustomerAddress(_addressCustomerRepository.BindCustomerAddress(user,
+                    address));
 
             }
             return RedirectToAction("ProfileUser", "Account");
@@ -112,14 +116,22 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult PayOff(string paymentMethod, string orderId)
+        public ActionResult PayOff(string paymentMethod, int orderId)
         {
             IPayment<CardParameters> payment = new PaymentCard();
+            ViewBag.orderId = orderId;
             if (paymentMethod == "Card")
             {
-
+                return View("CardPayment");
             }
-            return View();
+            return RedirectToAction("ShoppingList");
+        }
+
+        public ActionResult CardPayment(CardParameters cardParameters, int orderId)
+        {
+            IPayment<CardParameters> payment = new PaymentCard();
+            payment.Payment(orderId, cardParameters);
+            return RedirectToAction("ShoppingList");
         }
     }
 }

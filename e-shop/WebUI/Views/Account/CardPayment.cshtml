@@ -1,0 +1,14 @@
+﻿@model Domain.Parameters.CardParameters
+
+@{
+    ViewBag.Title = "CardPayment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CardPayment</h2>
+@using (Html.BeginForm("CardPayment", "Account"))
+{
+    @Html.EditorForModel()
+    @Html.Hidden("orderId",(int)ViewBag.orderId);
+    <input type="submit" value="payment" />
+}

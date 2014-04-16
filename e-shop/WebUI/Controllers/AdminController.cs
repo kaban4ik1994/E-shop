@@ -8,6 +8,7 @@ using Domain;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Entities;
+using Newtonsoft.Json;
 using WebUI.Helpers;
 using WebUI.Models;
 
@@ -22,8 +23,10 @@ namespace WebUI.Controllers
         private ISalesOrderHeader _salesOrderHeader;
         private IUserRepository _userRepository;
         private IProductModelRepository _productModelRepository;
+        private IProductModelProductDescription _productModelProductDescription;
+        private IProductDescription _productDescription;
 
-        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository, ISalesOrderDetail salesOrderDetail, IUserRepository userRepository, ISalesOrderHeader salesOrderHeader, IProductModelRepository productModelRepository)
+        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository, ISalesOrderDetail salesOrderDetail, IUserRepository userRepository, ISalesOrderHeader salesOrderHeader, IProductModelRepository productModelRepository, IProductModelProductDescription productModelProductDescription, IProductDescription productDescription)
         {
             _repository = repository;
             _productCategoryRepository = productCategoryRepository;
@@ -31,6 +34,8 @@ namespace WebUI.Controllers
             _userRepository = userRepository;
             _salesOrderHeader = salesOrderHeader;
             _productModelRepository = productModelRepository;
+            _productModelProductDescription = productModelProductDescription;
+            _productDescription = productDescription;
         }
 
         private bool IsAdministrator()
@@ -88,6 +93,11 @@ namespace WebUI.Controllers
         public ActionResult Edit(Product product, HttpPostedFileBase image)
         {
             if (!IsAdministrator()) return View("Error");
+            if (_repository.Products.FirstOrDefault(x => x.ProductNumber == product.ProductNumber && x.ProductID != product.ProductID) !=
+                null)
+            {
+                ModelState.AddModelError("", "this priductNumber are used");
+            }
             if (ModelState.IsValid)
             {
                 if (image != null)
@@ -211,6 +221,36 @@ namespace WebUI.Controllers
             return View(new ProductModel());
         }
 
+        public ActionResult CreateProductDescription(int productId, int productModelId) //Если продукт новый, то нужно добавить ему описание и все это дело связать с моделью
+        {
+            var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
+            var productModel =
+                _productModelRepository.ProductModels.FirstOrDefault(x => x.ProductModelID == productModelId); //модель
+
+            var productDescription = new ProductDescription { Description = String.Empty, ModifiedDate = DateTime.Now, rowguid = Guid.NewGuid() }; // создадим новое описание
+
+            _productDescription.SaveToProductDescription(productDescription); //сохраним его
+
+            var productModelProductDescription = new ProductModelProductDescription { Culture = "en    ", ModifiedDate = DateTime.Now, ProductDescriptionID = productDescription.ProductDescriptionID, ProductModelID = productModel.ProductModelID, rowguid = Guid.NewGuid() };
+
+            productModel.ProductModelProductDescription.Add(productModelProductDescription);
+            _productModelRepository.SaveToProductModel(productModel);
+
+
+            return RedirectToAction("Index");
+
+        }
+
+        [HttpPost]
+        public ActionResult EditDescription(string description, int descriptionId)
+        {
+            var descr =
+                _productDescription.ProductDescriptions.FirstOrDefault(x => x.ProductDescriptionID == descriptionId);
+            descr.Description = description;
+            _productDescription.SaveToProductDescription(descr);
+            return RedirectToAction("Index");
+        }
+
         public ActionResult EditProductModel(int productId)
         {
             if (!IsAdministrator()) return View("Error");
@@ -226,7 +266,7 @@ namespace WebUI.Controllers
                 _productModelRepository.ProductModels.FirstOrDefault(x => x.Name == productMod.Name);
 
             var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
-            
+
             product.ProductModelID = productModel.ProductModelID;
             _repository.SaveToProduct(product);
             return RedirectToAction("Index");
@@ -236,11 +276,7 @@ namespace WebUI.Controllers
 
         //ниже проверки
 
-        public JsonResult CheckProductNumber(string productNumber)
-        {
-            var result = _repository.Products.FirstOrDefault(x => x.ProductNumber == productNumber) == null ? true : false;
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+
 
         public JsonResult CheckCategoryName(string name)
         {

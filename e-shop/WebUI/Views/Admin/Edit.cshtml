@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {   
-   
+   @Html.ValidationSummary()
     @Html.EditorForModel()
     <div class="editor-lable">Image</div>
     <div class="editor-field">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Domain;
 using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Parameters;
@@ -41,6 +42,8 @@ namespace WebUI.Infrastructure
             _ninjectKernel.Bind<IOrderProcessor>().To<OrderProcessor>();
             _ninjectKernel.Bind<IPayment<CardParameters>>().To<PaymentCard>();
             _ninjectKernel.Bind<IProductModelRepository>().To<EFProductModelRepository>();
+            _ninjectKernel.Bind<IProductModelProductDescription>().To<EFProductModelProductDescription>();
+            _ninjectKernel.Bind<IProductDescription>().To<EFProductDescription>();
         }
 
     }

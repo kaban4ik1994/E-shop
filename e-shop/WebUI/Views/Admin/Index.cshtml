@@ -10,9 +10,6 @@
 <h2>Products</h2>
 
 
-
-
-
 @using (Html.BeginForm())
 {
     
@@ -28,7 +25,7 @@
 <span style="padding: 0 30px">
     @Html.ActionLink("Add a new category", "CreateCategory")
 </span>
-@Html.ActionLink("Add a new product model","CreateProductModel")
+@Html.ActionLink("Add a new product model", "CreateProductModel")
 
 <table class="Grid">
 
@@ -47,14 +44,14 @@
         <tr>
             <td>@Html.ActionLink("Reports", "StatisticsProduct", new { item.ProductID })</td>
             <td>
-               @if (item.ProductModel != null)
-               {
-                @Html.ActionLink(item.ProductModel.Name,"EditProductModel", new {productId=item.ProductID})   
-               }
-               else
-               {
-                   @Html.ActionLink("------","EditProductModel", new {productId=item.ProductID})    
-               }
+                @if (item.ProductModel != null)
+                {
+                    @Html.ActionLink(item.ProductModel.Name, "EditProductModel", new { productId = item.ProductID })   
+                }
+                else
+                {
+                    @Html.ActionLink("------", "EditProductModel", new { productId = item.ProductID })    
+                }
             </td>
             <td>@item.ProductID</td>
             <td>@Html.ActionLink(item.Name, "Edit", new { item.ProductID })</td>
@@ -64,9 +61,25 @@
                     var productModelProductDescriptionCulture = item.ProductModel.ProductModelProductDescription.FirstOrDefault(x => x.Culture == "en    ");
                     if (productModelProductDescriptionCulture != null)
                     {
-                @productModelProductDescriptionCulture.ProductDescription.Description
+                        using (Html.BeginForm("EditDescription", "Admin", FormMethod.Post))
+                        {
+                            var description = productModelProductDescriptionCulture.ProductDescription.Description;
+                @Html.EditorFor(x=>description)
+                @Html.Hidden("descriptionId", productModelProductDescriptionCulture.ProductDescription.ProductDescriptionID)
+                <input type="submit" value="Save" />
+                        }
+
+                    }
+                    else
+                    {
+                @Html.ActionLink("Create description", "CreateProductDescription", new { item.ProductID, item.ProductModelID})
                     }
                 }
+                else
+                {
+                <text> Create product model </text>
+                }
+
 
             </td>
             <td class="NumericCol">@item.StandardCost.ToString("C")</td>
@@ -76,7 +89,7 @@
                 }
                 else
                 {
-                @Html.ActionLink("------","EditCategory", new { productId = item.ProductID })
+                @Html.ActionLink("------", "EditCategory", new { productId = item.ProductID })
                 }
             </td>
 

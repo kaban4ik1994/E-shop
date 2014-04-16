@@ -22,7 +22,7 @@ namespace UnitTests.WebUITests
                 new Product {ProductID = 1, Name = "P1", ProductCategory =new ProductCategory{Name = "A"}}
             }.AsQueryable());
             var cart = new Cart();
-            var target = new CartController(mock.Object);
+            var target = new CartController(mock.Object, null,null,null,null);
 
             target.AddToCart(cart, 1, null);
 
@@ -39,7 +39,7 @@ namespace UnitTests.WebUITests
                new Product {ProductID = 1, Name = "P1", ProductCategory = new ProductCategory{ Name = "A"}}
             }.AsQueryable());
             var cart = new Cart();
-            var target = new CartController(mock.Object);
+            var target = new CartController(mock.Object, null, null, null, null);
 
             var result = target.AddToCart(cart, 2, "myUrl");
 
@@ -52,7 +52,7 @@ namespace UnitTests.WebUITests
         public void Can_View_Cart_Contents()//корректность передачи URL, по которому пользователь может вернуться к каталогу
         {
             var cart = new Cart();
-            var target = new CartController(null);
+            var target = new CartController(null,null,null,null,null);
             //
             var result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
             //
@@ -70,7 +70,7 @@ namespace UnitTests.WebUITests
             }.AsQueryable());
 
             var cart = new Cart();
-            var target = new CartController(mock.Object);
+            var target = new CartController(mock.Object, null, null, null, null);
             //
             target.AddToCart(cart, 1, null);//добавим
             target.ChangeQuantity(cart, 1, null,2);// сменим кол-во

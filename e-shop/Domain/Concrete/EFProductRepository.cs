@@ -27,17 +27,11 @@ namespace Domain.Concrete
 
         public void SaveToProduct(Product product)
         {
-
-            if (product.ProductID == 0)
-                _context.Product.Add(product);
-          
+  
             _context.Entry(product).State = product.ProductID == 0 ? EntityState.Added : EntityState.Modified;
             _context.SaveChanges();
         }
     }
-
-
-
 }
 
      

@@ -20,18 +20,12 @@ namespace Domain.Concrete
         }
         public void SaveToAddress(Address address)
         {
-            using (var db = new AdventureWorksLT2012_DataEntities())
-            {
-               
-                db.Entry(address).State = address.AddressID == 0 ? EntityState.Added : EntityState.Modified;
+          
+                _context.Entry(address).State = address.AddressID == 0 ? EntityState.Added : EntityState.Modified;
 
-                if (address.AddressID == 0)
-                {
-                    db.Address.Add(address);
-                }
-                db.SaveChanges();
+                _context.SaveChanges();
 
             }
         }
     }
-}
+

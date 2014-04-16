@@ -9,21 +9,21 @@ using Domain.Abstract;
 
 namespace Domain.Concrete
 {
-   public class EFSalesOrderHeader: ISalesOrderHeader
+    public class EFSalesOrderHeader : ISalesOrderHeader
     {
-       private AdventureWorksLT2012_DataEntities _context=new AdventureWorksLT2012_DataEntities();
+        private AdventureWorksLT2012_DataEntities _context = new AdventureWorksLT2012_DataEntities();
 
-       public IQueryable<SalesOrderHeader> SalesOrderHeaders
-       {
-           get
-           {
-               return _context.SalesOrderHeader;
-           }
-       }
-       public void AddSalesOrderHeader(SalesOrderHeader salesOrderHeader)
-       {
-          _context.Entry(salesOrderHeader).State=EntityState.Added;
-           _context.SaveChanges();
-       }
+        public IQueryable<SalesOrderHeader> SalesOrderHeaders
+        {
+            get
+            {
+                return _context.SalesOrderHeader;
+            }
+        }
+        public void AddSalesOrderHeader(SalesOrderHeader salesOrderHeader)
+        {
+            _context.Entry(salesOrderHeader).State = salesOrderHeader.SalesOrderID==0?EntityState.Added:EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

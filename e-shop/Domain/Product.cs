@@ -26,7 +26,6 @@ namespace Domain
         [Required(ErrorMessage = "*")]
         public string Name { get; set; }
         [Required(ErrorMessage = "*")]
-        [Remote("CheckProductNumber", "Admin", ErrorMessage = "This productNumber are used")]
         public string ProductNumber { get; set; }
         [HiddenInput(DisplayValue = false)]
         public string Color { get; set; }

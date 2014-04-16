@@ -24,17 +24,11 @@ namespace Domain.Concrete
 
         public void SaveToUser(Customer user)
         {
-            using (var db = new AdventureWorksLT2012_DataEntities())
-            {
+            
              
-                db.Entry(user).State = user.CustomerID == 0 ? EntityState.Added : EntityState.Modified;
-                
-                if (user.CustomerID == 0)
-                    db.Customer.Add(user);
-                db.SaveChanges();
-
-
-            }
+                _context.Entry(user).State = user.CustomerID == 0 ? EntityState.Added : EntityState.Modified;
+             
+               _context.SaveChanges();
 
         }
 

@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Domain;
 using Domain.Abstract;
+using Domain.Concrete;
+using WebUI.Helpers;
 
 namespace WebUI.Controllers
 {
@@ -25,8 +27,20 @@ namespace WebUI.Controllers
 
         public JsonResult CheckForExist(string emailAddress)
         {
-            var result =
-                _repository.Users.FirstOrDefault(x => x.EmailAddress==emailAddress) == null;
+            var user = AuthHelper.GetUser(HttpContext, new EfUserRepository());
+            bool result;
+            if (user != null)
+            {
+                result =
+                   _repository.Users.FirstOrDefault(
+                       x => x.EmailAddress == emailAddress && x.CustomerID != user.CustomerID) == null;
+            }
+            else
+            {
+                result =
+                  _repository.Users.FirstOrDefault(
+                      x => x.EmailAddress == emailAddress) == null;
+            }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

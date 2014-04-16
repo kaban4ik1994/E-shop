@@ -22,11 +22,11 @@ namespace Domain.Concrete
 
         public void SaveToProductModel(ProductModel productModel)
         {
-            if (productModel.ProductModelID == 0)
-               _context.ProductModel.Add(productModel);
-
+          
+      
             _context.Entry(productModel).State = (EntityState) (productModel.ProductModelID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
             _context.SaveChanges();
-        }
+
+            }
     }
 }

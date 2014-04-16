@@ -23,14 +23,11 @@ namespace Domain.Concrete
        }
        public void SaveToProductCategory(ProductCategory productCategory)
        {
-           using (var db = new AdventureWorksLT2012_DataEntities())
-           {
-               if (productCategory.ProductCategoryID == 0)
-                   db.ProductCategory.Add(productCategory);
-
-               db.Entry(productCategory).State = (EntityState) (productCategory.ProductCategoryID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
-               db.SaveChanges();
-           }   
+         
+           
+               _context.Entry(productCategory).State = (EntityState) (productCategory.ProductCategoryID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
+               _context.SaveChanges();
+              
        }
     }
 }

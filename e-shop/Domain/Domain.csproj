@@ -78,6 +78,8 @@
     <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IPayment.cs" />
     <Compile Include="Abstract\IProductCategoryRepository.cs" />
+    <Compile Include="Abstract\IProductDescription.cs" />
+    <Compile Include="Abstract\IProductModelProductDescription.cs" />
     <Compile Include="Abstract\IProductModelRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
     <Compile Include="Abstract\ISalesOrderDetail.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Address.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Concrete\EFProductModelProductDescription.cs" />
     <Compile Include="Concrete\EFProductModelRepository.cs" />
     <Compile Include="Concrete\OrderProcessor.cs" />
     <Compile Include="Concrete\EFAddressRepository.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Concrete\EFSalesOrderHeader.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
     <Compile Include="Concrete\PaymentCard.cs" />
+    <Compile Include="Concrete\EFProductDescription.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
