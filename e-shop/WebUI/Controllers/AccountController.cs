@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using Domain;
 using Domain.Abstract;
+using Domain.Concrete;
+using Domain.Parameters;
 using WebUI.Helpers;
 using WebUI.Models;
 
@@ -17,20 +19,21 @@ namespace WebUI.Controllers
         private IUserRepository _userRepository;
         private IAddressRepository _addressRepository;
         private IAddressCustomerRepository _addressCustomerRepository;
+        private ISalesOrderHeader _salesOrderHeader;
 
-
-        public AccountController(IUserRepository userRepository, IAddressRepository addressRepository, IAddressCustomerRepository addressCustomerRepository)
+        public AccountController(IUserRepository userRepository, IAddressRepository addressRepository, IAddressCustomerRepository addressCustomerRepository, ISalesOrderHeader salesOrderHeader)
         {
 
             _userRepository = userRepository;
             _addressRepository = addressRepository;
             _addressCustomerRepository = addressCustomerRepository;
+            _salesOrderHeader = salesOrderHeader;
         }
 
         [HttpPost]
         public ActionResult Login(LogOnViewModel model)
         {
-            var user = _userRepository.Users.FirstOrDefault(x => x.LastName == model.UserName && x.PasswordSalt == model.Password);
+            var user = _userRepository.Users.FirstOrDefault(x => x.EmailAddress == model.UserName && x.PasswordSalt == model.Password);
             if (user != null)
             {
                 Helpers.AuthHelper.LogInUser(HttpContext, user.rowguid.ToString());
@@ -77,9 +80,7 @@ namespace WebUI.Controllers
             address.rowguid = Guid.NewGuid();
             if (user != null)
             {
-
                 _addressRepository.SaveToAddress(address);
-
                 _addressCustomerRepository.SaveToCustomerAddress(_addressCustomerRepository.BindCustomerAddress(user, address));
 
             }
@@ -103,5 +104,22 @@ namespace WebUI.Controllers
 
         }
 
+        public ActionResult ShoppingList()
+        {
+            var user = AuthHelper.GetUser(HttpContext, _userRepository);
+            var result = _salesOrderHeader.SalesOrderHeaders.Where(x => x.CustomerID == user.CustomerID).ToList();
+            return View(result);
+        }
+
+        [HttpPost]
+        public ActionResult PayOff(string paymentMethod, string orderId)
+        {
+            IPayment<CardParameters> payment = new PaymentCard();
+            if (paymentMethod == "Card")
+            {
+
+            }
+            return View();
+        }
     }
 }

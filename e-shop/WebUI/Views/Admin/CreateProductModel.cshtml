@@ -1,0 +1,14 @@
+﻿@model Domain.ProductModel
+
+@{
+    ViewBag.Title = "CreateProductModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CreateProductModel</h2>
+
+@using (Html.BeginForm("CreateProductModel", "Admin"))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Create"/>
+}

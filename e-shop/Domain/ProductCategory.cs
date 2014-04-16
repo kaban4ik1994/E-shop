@@ -27,6 +27,7 @@ namespace Domain
         [HiddenInput(DisplayValue = false)]
         public Nullable<int> ParentProductCategoryID { get; set; }
         [Required(ErrorMessage = "*")]
+        [Remote("CheckCategoryName", "Admin", ErrorMessage = "This Name are used")]
         public string Name { get; set; }
         [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }

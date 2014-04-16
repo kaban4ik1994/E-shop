@@ -75,7 +75,10 @@
   <ItemGroup>
     <Compile Include="Abstract\IAddressCustomerRepository.cs" />
     <Compile Include="Abstract\IAddressRepository.cs" />
+    <Compile Include="Abstract\IOrderProcessor.cs" />
+    <Compile Include="Abstract\IPayment.cs" />
     <Compile Include="Abstract\IProductCategoryRepository.cs" />
+    <Compile Include="Abstract\IProductModelRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
     <Compile Include="Abstract\ISalesOrderDetail.cs" />
     <Compile Include="Abstract\ISalesOrderHeader.cs" />
@@ -83,6 +86,8 @@
     <Compile Include="Address.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
+    <Compile Include="Concrete\EFProductModelRepository.cs" />
+    <Compile Include="Concrete\OrderProcessor.cs" />
     <Compile Include="Concrete\EFAddressRepository.cs" />
     <Compile Include="Concrete\EFCustomerAddressRepository.cs" />
     <Compile Include="Concrete\EFProductCategoryRepository.cs" />
@@ -90,6 +95,7 @@
     <Compile Include="Concrete\EFSalesOrderDetails.cs" />
     <Compile Include="Concrete\EFSalesOrderHeader.cs" />
     <Compile Include="Concrete\EFUserRepository.cs" />
+    <Compile Include="Concrete\PaymentCard.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
@@ -115,6 +121,7 @@
     <Compile Include="Entities\Reports.cs" />
     <Compile Include="Entities\ReportProductModel.cs" />
     <Compile Include="Entities\ReportUserModel.cs" />
+    <Compile Include="Parameters\CardParameters.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>Data.tt</DependentUpon>
     </Compile>
@@ -182,6 +189,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,7 +13,10 @@
     @Html.ValidationMessageFor(r => r.FirstName)<br />
     <text>Last Name: </text> @Html.TextBoxFor(r => r.LastName)
     @Html.ValidationMessageFor(r => r.LastName)<br />
-    
+   
+     <text>Email: </text> @Html.TextBoxFor(r => r.EmailAddress)
+    @Html.ValidationMessageFor(r => r.EmailAddress)<br />
+
     <text>Password: </text> @Html.PasswordFor(r => r.PasswordSalt)
     @Html.ValidationMessageFor(r => r.PasswordSalt)<br />
     @Html.HiddenFor(x=>x.ModifiedDate,DateTime.Now)

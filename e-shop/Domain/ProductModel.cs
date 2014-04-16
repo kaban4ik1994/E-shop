@@ -7,11 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
+
 namespace Domain
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class ProductModel
     {
         public ProductModel()
@@ -19,13 +22,18 @@ namespace Domain
             this.Product = new HashSet<Product>();
             this.ProductModelProductDescription = new HashSet<ProductModelProductDescription>();
         }
-    
+        [HiddenInput(DisplayValue = false)]
         public int ProductModelID { get; set; }
+        [Required(ErrorMessage = "*")]
+        [Remote("CheckProductModelName", "Admin", ErrorMessage = "This Name are used")]
         public string Name { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public string CatalogDescription { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.Guid rowguid { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
-    
+
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<ProductModelProductDescription> ProductModelProductDescription { get; set; }
     }

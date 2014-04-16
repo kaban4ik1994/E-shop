@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Abstract;
@@ -20,7 +22,8 @@ namespace Domain.Concrete
        }
        public void AddSalesOrderDetails(SalesOrderDetail salesOrderDetail)
        {
-           throw new NotImplementedException();
+          _context.Entry(salesOrderDetail).State=EntityState.Added;
+           _context.SaveChanges();
        }
     }
 }

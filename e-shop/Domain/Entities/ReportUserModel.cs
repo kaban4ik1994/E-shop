@@ -9,6 +9,8 @@ namespace Domain.Entities
         public DateTime OrderDate { get; set; }
         public decimal SubTotal { get; set; }
         public List<ReportProductModel> Products { get; set; }
-
+        public Address Address { get; set; }
+        public string ShipMethod { get; set; }
+        public int Status { get; set; }
     }
 }

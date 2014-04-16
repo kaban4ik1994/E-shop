@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,7 +22,8 @@ namespace Domain.Concrete
        }
        public void AddSalesOrderHeader(SalesOrderHeader salesOrderHeader)
        {
-           throw new NotImplementedException();
+          _context.Entry(salesOrderHeader).State=EntityState.Added;
+           _context.SaveChanges();
        }
     }
 }

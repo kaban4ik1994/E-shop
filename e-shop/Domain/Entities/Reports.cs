@@ -35,7 +35,9 @@ namespace Domain.Entities
                     {
                         OrderDate = sales.OrderDate,
                         SubTotal = sales.SubTotal,
-                        
+                        Address = sales.Address1,
+                        ShipMethod = sales.ShipMethod,
+                        Status = sales.Status,
                         Products = new List<ReportProductModel>(from s in sales.SalesOrderDetail
                                                                 select new ReportProductModel
                                                                     {

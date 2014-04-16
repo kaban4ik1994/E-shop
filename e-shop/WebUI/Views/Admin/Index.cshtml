@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Domain.Product>
+﻿@using System.Diagnostics.Eventing.Reader
+@using System.Web.Hosting
+@model IEnumerable<Domain.Product>
 
 @{
     ViewBag.Title = "Index";
@@ -21,13 +23,18 @@
 }
 
 <span style="padding: 0 30px">
-@Html.ActionLink("Add a new product", "Create")
+    @Html.ActionLink("Add a new product", "Create")
 </span>
-@Html.ActionLink("Add a new category", "CreateCategory")
+<span style="padding: 0 30px">
+    @Html.ActionLink("Add a new category", "CreateCategory")
+</span>
+@Html.ActionLink("Add a new product model","CreateProductModel")
+
 <table class="Grid">
 
     <tr>
         <th>Reports</th>
+        <th>model Name</th>
         <th>ID</th>
         <th>Name</th>
         <th>Descriprion</th>
@@ -39,6 +46,16 @@
     {
         <tr>
             <td>@Html.ActionLink("Reports", "StatisticsProduct", new { item.ProductID })</td>
+            <td>
+               @if (item.ProductModel != null)
+               {
+                @Html.ActionLink(item.ProductModel.Name,"EditProductModel", new {productId=item.ProductID})   
+               }
+               else
+               {
+                   @Html.ActionLink("------","EditProductModel", new {productId=item.ProductID})    
+               }
+            </td>
             <td>@item.ProductID</td>
             <td>@Html.ActionLink(item.Name, "Edit", new { item.ProductID })</td>
 
@@ -55,14 +72,19 @@
             <td class="NumericCol">@item.StandardCost.ToString("C")</td>
             <td>@if (item.ProductCategory != null)
                 {
-                @Html.ActionLink(item.ProductCategory.Name, "EditCategory", new { productId=item.ProductID })
-                }</td>
+                @Html.ActionLink(item.ProductCategory.Name, "EditCategory", new { productId = item.ProductID })
+                }
+                else
+                {
+                @Html.ActionLink("------","EditCategory", new { productId = item.ProductID })
+                }
+            </td>
 
             <td>
-                @Html.ActionLink(item.SellEndDate!=null?item.SellEndDate.ToString():"----","ChangeSellEndDate", new{productId=item.ProductID})
-                              
+                @Html.ActionLink(item.SellEndDate != null ? item.SellEndDate.ToString() : "----", "ChangeSellEndDate", new { productId = item.ProductID })
+
             </td>
- 
+
         </tr>
     }
 

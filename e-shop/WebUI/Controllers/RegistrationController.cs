@@ -23,12 +23,19 @@ namespace WebUI.Controllers
             return View();
         }
 
+        public JsonResult CheckForExist(string emailAddress)
+        {
+            var result =
+                _repository.Users.FirstOrDefault(x => x.EmailAddress==emailAddress) == null;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult Registration(Customer user)
         {
             user.ModifiedDate = DateTime.Now; // текущее время
             user.NameStyle = false;
-            user.rowguid = Guid.NewGuid(); 
+            user.rowguid = Guid.NewGuid();
             user.PasswordHash = Helpers.SecurityHelper.Hash(user.PasswordSalt);
             user.PasswordSalt = user.PasswordSalt;
 
@@ -36,6 +43,6 @@ namespace WebUI.Controllers
             _repository.SaveToUser(user);
 
             return RedirectToAction("List", "Product");
-        } 
+        }
     }
 }

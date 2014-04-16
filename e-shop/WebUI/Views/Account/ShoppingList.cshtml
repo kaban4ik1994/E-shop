@@ -1,0 +1,30 @@
+﻿@model ICollection<Domain.SalesOrderHeader>
+
+@{
+    ViewBag.Title = "ShoppingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Shopping List</h2>
+
+
+
+@foreach (var r in Model)
+{
+    <br />
+    <br />
+    <br />
+    if (r.Status == 0)
+    {
+        using (Html.BeginForm("PayOff", "Account"))
+        {            
+    @Html.DropDownList("paymentMethod", new SelectList(new List<string> { "Card" }))
+    @Html.Hidden("orderId", r.SalesOrderID)
+    <input type="submit" value="Payment" />
+        }
+    }
+    <text>Order date @r.OrderDate
+    <br />
+    Sub Total @r.SubTotal</text>
+    <br />
+}

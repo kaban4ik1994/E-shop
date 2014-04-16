@@ -1,4 +1,6 @@
-﻿@model Domain.SalesOrderHeader
+﻿@using System.Data.Entity.ModelConfiguration.Conventions
+@using System.Globalization
+@model WebUI.Models.ShippingDetailsModel
 
 @{
     ViewBag.Title = "Checkout";
@@ -6,11 +8,58 @@
 }
 
 <h2>Check out</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
 {
 
-  
+    <table width="90%" align="center">
+    <thead>
+        <tr>
+            <th align="center">Quantity</th>
+            <th align="center">Item</th>
+            <th align="center">Price</th>
+            <th align="center">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
 
+        @foreach (var line in Model.Cart.Lines)
+        {
+            
+            <tr>
 
+                <td align="center">
+                    @line.Quantity
+                </td>
+                <td align="center">@line.Product.Name</td>
+                <td align="center">@line.Product.StandardCost.ToString("C")</td>
+                <td align="center">@((line.Product.StandardCost * line.Quantity).ToString("C"))</td>
 
+            </tr>
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" align="center">Total:</td>
+            <td align="right">
+                @Model.Cart.ComputeTotalValue().ToString("C")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+    
+    
+    
+    
+    
+    
+    <p>
+        ship method: @Html.DropDownList("shipMethod",new SelectList(new List<string>{"Post","Courier"}))
+    </p>
+    
+     @Html.EditorFor(x => x.Address)
+    <p>
+        main address @Html.CheckBox("mainAddress")
+    </p>
+    <input type="submit" name="Checkout" />
 }

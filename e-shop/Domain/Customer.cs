@@ -40,6 +40,8 @@ namespace Domain
         public string CompanyName { get; set; }
         [HiddenInput(DisplayValue = false)]
         public string SalesPerson { get; set; }
+        [Required(ErrorMessage = "*")]
+        [Remote("CheckForExist", "Registration", ErrorMessage = "This email are used")]
         public string EmailAddress { get; set; }
         public string Phone { get; set; }
         [HiddenInput(DisplayValue = false)]
@@ -50,6 +52,7 @@ namespace Domain
         public System.Guid rowguid { get; set; }
         [HiddenInput(DisplayValue = false)]
         public System.DateTime ModifiedDate { get; set; }
+        
 
         public virtual ICollection<CustomerAddress> CustomerAddress { get; set; }
         public virtual ICollection<SalesOrderHeader> SalesOrderHeader { get; set; }

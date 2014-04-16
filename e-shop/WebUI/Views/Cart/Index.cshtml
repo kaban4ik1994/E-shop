@@ -1,4 +1,7 @@
-﻿@using System.Web.Razor
+﻿@using System.Net.Mime
+@using System.Web.Razor
+@using Domain.Concrete
+@using WebUI.Helpers
 @model WebUI.Models.CartIndexViewModel
 
 @{
@@ -8,16 +11,6 @@
 }
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('form[action$="/Cart/ChangeQuantity"]').submit(function () {
-            var quantity = $("#line_Quantity").val();
-            $("#quantity").attr('value', quantity);
-        });
-    });
-
-
-</script>
 
 <h2>Your Cart</h2>
 <table width="90%" align="center">
@@ -78,5 +71,13 @@
 </table>
 <p align="center" class="actionButtons">
     <a href="@Model.ReturnUrl">Continue shopping</a>
-    @Html.ActionLink("Checkout now", "Checkout")
+   @if (AuthHelper.IsAuthenticated(Context, new EfUserRepository()))
+   {
+       @Html.ActionLink("Checkout now", "Checkout")
+   }
+   else
+   {
+    @Html.Label("Payment only for authorized")   
+   }
+
 </p>

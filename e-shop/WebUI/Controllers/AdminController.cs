@@ -21,14 +21,16 @@ namespace WebUI.Controllers
         private ISalesOrderDetail _salesOrderDetail;
         private ISalesOrderHeader _salesOrderHeader;
         private IUserRepository _userRepository;
+        private IProductModelRepository _productModelRepository;
 
-        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository, ISalesOrderDetail salesOrderDetail, IUserRepository userRepository, ISalesOrderHeader salesOrderHeader)
+        public AdminController(IProductRepository repository, IProductCategoryRepository productCategoryRepository, ISalesOrderDetail salesOrderDetail, IUserRepository userRepository, ISalesOrderHeader salesOrderHeader, IProductModelRepository productModelRepository)
         {
             _repository = repository;
             _productCategoryRepository = productCategoryRepository;
             _salesOrderDetail = salesOrderDetail;
             _userRepository = userRepository;
             _salesOrderHeader = salesOrderHeader;
+            _productModelRepository = productModelRepository;
         }
 
         private bool IsAdministrator()
@@ -82,7 +84,6 @@ namespace WebUI.Controllers
 
         }
 
-
         [HttpPost]
         public ActionResult Edit(Product product, HttpPostedFileBase image)
         {
@@ -95,13 +96,20 @@ namespace WebUI.Controllers
                     product.ThumbNailPhoto = new byte[image.ContentLength];
                     image.InputStream.Read(product.ThumbNailPhoto, 0, image.ContentLength);
                 }
+                if (product.ProductID == 0) //если создаем новый
+                {
+                    product.rowguid = Guid.NewGuid();
+                    product.ModifiedDate = DateTime.Now;
+                    product.ListPrice = 0;
+                    product.SellStartDate = DateTime.Now;
+
+                }
                 _repository.SaveToProduct(product);
                 TempData["message"] = string.Format("{0} has been saved", product.Name);
                 return RedirectToAction("Index");
             }
             return View(product);
         }
-
 
         public ActionResult EditCategory(int productId)
         {
@@ -111,7 +119,6 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
-        [ValidateInput(false)]
         public ActionResult EditCategory(ProductCategory productCategory, int productId)
         {
             if (!IsAdministrator()) return View("Error");
@@ -125,7 +132,6 @@ namespace WebUI.Controllers
             _repository.SaveToProduct(product);
             return RedirectToAction("Index");
 
-            return View(_productCategoryRepository.ProductCategories.ToList());
         }
 
         public ActionResult CreateCategory(ProductCategory productCategory)
@@ -174,16 +180,15 @@ namespace WebUI.Controllers
                 var result =
                     report.GetStatisticsBySales().Where(x => x.DateTime.CompareTo(Convert.ToDateTime(minDate)) >= 0
                                                              &&
-                                                             x.DateTime.CompareTo(Convert.ToDateTime(maxDate)) <= 0);
+                                                             x.DateTime.CompareTo(Convert.ToDateTime(maxDate).AddSeconds(1)) <= 0);
                 return View(result.ToList());
             }
             return View(report.GetStatisticsBySales());
         }
 
-
         public ActionResult ChangeSellEndDate(int productId)
         {
-            var a = ModelState.IsValid;
+
             if (!IsAdministrator()) return View("Error");
             var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
             if (product != null && product.SellEndDate != null)
@@ -191,6 +196,62 @@ namespace WebUI.Controllers
             else if (product != null) product.SellEndDate = DateTime.Now;
             _repository.SaveToProduct(product);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateProductModel(ProductModel productModel)
+        {
+            if (!IsAdministrator()) return View("Error");
+            if (productModel.Name != null)
+            {
+                productModel.ModifiedDate = DateTime.Now;
+                productModel.rowguid = Guid.NewGuid();
+                _productModelRepository.SaveToProductModel(productModel);
+                return RedirectToAction("Index");
+            }
+            return View(new ProductModel());
+        }
+
+        public ActionResult EditProductModel(int productId)
+        {
+            if (!IsAdministrator()) return View("Error");
+            ViewBag.ProductId = productId;
+            return View(_productModelRepository.ProductModels.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult EditProductModel(ProductModel productMod, int productId)
+        {
+            if (!IsAdministrator()) return View("Error");
+            var productModel =
+                _productModelRepository.ProductModels.FirstOrDefault(x => x.Name == productMod.Name);
+
+            var product = _repository.Products.FirstOrDefault(x => x.ProductID == productId);
+            
+            product.ProductModelID = productModel.ProductModelID;
+            _repository.SaveToProduct(product);
+            return RedirectToAction("Index");
+
+        }
+
+
+        //ниже проверки
+
+        public JsonResult CheckProductNumber(string productNumber)
+        {
+            var result = _repository.Products.FirstOrDefault(x => x.ProductNumber == productNumber) == null ? true : false;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckCategoryName(string name)
+        {
+            var result = _productCategoryRepository.ProductCategories.FirstOrDefault(x => x.Name == name) == null;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckProductModelName(string name)
+        {
+            var result = _productModelRepository.ProductModels.FirstOrDefault(x => x.Name == name) == null;
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }

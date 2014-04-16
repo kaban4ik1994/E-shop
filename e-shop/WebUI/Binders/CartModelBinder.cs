@@ -21,8 +21,6 @@ namespace WebUI.Binders
             cart = new Cart();
             controllerContext.HttpContext.Session[_sessionKey] = cart;
             return cart;
-
-
         }
     }
 }

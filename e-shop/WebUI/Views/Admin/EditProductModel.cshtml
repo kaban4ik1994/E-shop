@@ -1,0 +1,15 @@
+﻿@model List<Domain.ProductModel>
+
+@{
+    ViewBag.Title = "EditProductModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditProductModel</h2>
+@using (Html.BeginForm("EditProductModel", "Admin", FormMethod.Post))
+{
+    @Html.DropDownList("Name", new SelectList(Model.Select(x => x.Name)))
+    @Html.HiddenFor(x=>x.FirstOrDefault().ProductModelID)
+    @Html.Hidden("productId",(int)ViewBag.ProductId)
+    <input type="submit" value="save" />
+}

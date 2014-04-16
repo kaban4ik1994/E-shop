@@ -14,10 +14,34 @@
 <h2>@TempData["User"]</h2>
 @foreach (var r in Model)
 {
-    <span style="padding: 30px 10px">Order date @r.OrderDate</span>
-    <span style="padding: 30px 10px">Sub Total @r.SubTotal</span>
-   
-    
+    <br />
+    <br />
+    <br />
+    if (r.Status == 0)
+    {
+        <text>not paid<br/> </text>
+    }
+    if (r.Status ==1)
+    {
+        <text>Paid </text>
+    }
+    <text>Order date @r.OrderDate
+    <br />
+    Sub Total @r.SubTotal</text>
+    if (r.Address != null)
+    {
+    <h4>Address</h4>
+    <text>
+    Address: @r.Address.AddressLine1
+    <br />
+    City:  @r.Address.City<br />
+    Country region:  @r.Address.CountryRegion<br />
+    Postal code: @r.Address.PostalCode
+    <br />
+    Ship method:  @r.ShipMethod<br />
+    </text>
+    }
+
     <h4>Contents</h4>
     <table class="Grid">
         <tr>
@@ -33,5 +57,7 @@
                 <td>@Html.DisplayFor(x => p.Amount)</td>
             </tr>
         }
+
     </table>
 }
+
