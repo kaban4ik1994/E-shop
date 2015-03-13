@@ -23,7 +23,7 @@ namespace Domain.Concrete
        public void SaveToProductDescription(ProductDescription productDescription)
        {
            
-           _context.Entry(productDescription).State = (EntityState) (productDescription.ProductDescriptionID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
+           _context.Entry(productDescription).State = (EntityState) (productDescription.ProductDescriptionID == 0 ? EntityState.Added : EntityState.Modified);
            _context.SaveChanges();
        }
     }

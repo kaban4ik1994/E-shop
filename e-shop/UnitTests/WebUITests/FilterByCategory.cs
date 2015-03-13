@@ -27,7 +27,7 @@ namespace UnitTests.WebUITests
             }.AsQueryable());
 
             var controller = new ProductController(mock.Object) { PageSize = 3 };
-            var result = ((ProductsListViewModel)controller.List(null, null, null, null, null, null, null, "Cat2",1).Model).Products.ToArray();
+            var result = ((ProductsListViewModel)controller.List(null, null, null, null, null, null, null, "Cat2", 1).Model).Products.ToArray();
 
             Assert.AreEqual(result.Length, 2);
             Assert.IsTrue(result[0].Name == "P2" && result[0].ProductCategory.Name == "Cat2");

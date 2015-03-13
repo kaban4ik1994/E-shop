@@ -81,8 +81,6 @@ namespace UnitTests.WebUITests
             var target = new ProductController(mosk.Object);
             var result = target.GetImage(2);
             Assert.IsNull(result);
-            
-
         }
 
 

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Abstract;
 using System.Data.Entity;
-using System.Data.Objects;
 
 namespace Domain.Concrete
 {

@@ -25,7 +25,7 @@ namespace Domain.Concrete
        {
          
            
-               _context.Entry(productCategory).State = (EntityState) (productCategory.ProductCategoryID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
+               _context.Entry(productCategory).State = (EntityState) (productCategory.ProductCategoryID == 0 ? EntityState.Added : EntityState.Modified);
                _context.SaveChanges();
               
        }

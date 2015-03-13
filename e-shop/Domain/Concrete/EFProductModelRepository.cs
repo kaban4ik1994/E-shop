@@ -24,7 +24,7 @@ namespace Domain.Concrete
         {
           
       
-            _context.Entry(productModel).State = (EntityState) (productModel.ProductModelID == 0 ? System.Data.EntityState.Added : System.Data.EntityState.Modified);
+            _context.Entry(productModel).State = (EntityState) (productModel.ProductModelID == 0 ? EntityState.Added : EntityState.Modified);
             _context.SaveChanges();
 
             }

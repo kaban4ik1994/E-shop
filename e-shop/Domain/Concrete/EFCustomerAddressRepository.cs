@@ -29,7 +29,7 @@ namespace Domain.Concrete
                     x => x.AddressID == customerAddress.AddressID && x.CustomerID == customerAddress.CustomerID);
             if (customerAdressInDb == null)
             {
-                _context.Entry(customerAddress).State = (EntityState)System.Data.EntityState.Added;
+                _context.Entry(customerAddress).State = (EntityState)EntityState.Added;
             }
 
             _context.Entry(customerAddress.Address).State = EntityState.Unchanged;
